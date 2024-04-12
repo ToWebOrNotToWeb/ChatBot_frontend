@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
+    <title>chat bot</title>
+</head>
+<body>
+    <header>
+        <h1>ToWebOrNotToWeb</h1>
+    </header>
+    <main>
+        <div class="prompt">
+            <div>
+                <label for="promptInput">Enter the name of the thread :</label>
+                <input id="threadName" type="text" name="promptInput" maxlength="20">
+                <button onclick="createThread()">Create</button>
+                <button onclick="undo()">Undo</button>
+            </div>
+        </div>
+        <div id="chat-box">
+            <div id="chat-container">
+                
+            </div>
+            <div id="chat-control">
+                <input type="text" id="input" placeholder="Type a message...">
+                <button id="send" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        <aside>
+            <ul id="allDiscution">
+                <p id="newDiscution" onclick="showPrompt()">New discution +</p>
+            </ul>
+            <div>
+                <img src="img/setting.png" alt="settings">
+                <section class="menu">
+                    <p>Profile</p>
+                    <p>Option</p>
+                    <p onclick="logout()">LogOut</p>
+                </section>
+            </div>
+        </aside>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+</html>
