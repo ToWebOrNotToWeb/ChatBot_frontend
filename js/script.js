@@ -2,11 +2,21 @@ if (!localStorage.getItem('token')) {
     window.location.href = 'auth.html';
 }
 const token = localStorage.getItem('token');
-const port = 8003;
 const allDiscution = document.getElementById('allDiscution');
 const chatContainer = document.getElementById('chat-container');
 const userInput = document.getElementById('input');
+//const port = 8003;
+let url = '';
 
+if (window.location.href.includes('local') || window.location.href.includes('127')) {
+    url = 'http://localhost:8003';
+    console.log('local');
+    console.log(url);
+} else {
+    url = 'unknown';
+    console.log('Online');
+    console.log(url);
+};
 
 getThreads()
 
@@ -37,12 +47,28 @@ function undo() {
     prompt.classList.remove('show');
     let name = document.getElementById('threadName');
     name.value = '';
+    document.getElementById('threadName').classList.remove('error');
+}
+
+function formatResponse(text) {
+    const lines = text.split('\n');
+    let formattedText = '';
+
+    lines.forEach(line => {
+        if (line.match(/^\d+\./)) { // Checks if the line starts with a number followed by a dot
+            formattedText += `<li>${line}</li>`;
+        } else {
+            formattedText += `<p>${line}</p>`;
+        }
+    });
+
+    return `<ul>${formattedText}</ul>`;
 }
 
 function getThreads() {
     console.log('getting threads');
 
-    fetch('http://localhost:'+ port +'/getThreads', {
+    fetch(url+'/getThreads', {
         method: 'GET', 
         headers: {
             'Content-Type': 'application/json',
@@ -92,7 +118,7 @@ function getThreads() {
 }
 
 function deleteThread(Id) {
-    fetch('http://localhost:'+ port +'/deleteThread', {
+    fetch(url+'/deleteThread', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -102,7 +128,7 @@ function deleteThread(Id) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
             getThreads();
         });
 }
@@ -110,8 +136,12 @@ function deleteThread(Id) {
 function createThread() {
     let newName = document.getElementById('threadName');
     newName = newName.value;
+    if (newName === '') {
+        document.getElementById('threadName').classList.add('error');
+        return;
+    }
     undo();
-    fetch('http://localhost:'+ port +'/newThread', {
+    fetch(url+'/newThread', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -120,14 +150,15 @@ function createThread() {
         body: JSON.stringify({ chatName: newName })
     }).then(response => response.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
+            document.getElementById('threadName').classList.remove('error');
             getThreads();
         });
 
 }
 
 function getMessages(Id) {
-    fetch('http://localhost:'+ port +'/getMessages', {
+    fetch(url+'/getMessages', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -141,8 +172,11 @@ function getMessages(Id) {
             messages.messages.content.forEach(element => {
                 if (element.role != 'system') {
                     let div = document.createElement('div');
-                    div.innerHTML = element.content;
+                    div.innerHTML = formatResponse(element.content);
+                    div.id = 'chat-response';
+                    let cl = 'chat-format';
                     div.classList.add(element.role);
+                    div.classList.add(cl);
                     chatContainer.appendChild(div);
                 } 
             })
@@ -161,7 +195,7 @@ function sendMessage() {
     chatContainer.scrollTop = chatContainer.scrollHeight;
     let chatId = document.querySelector('.active').id;
 
-    fetch('http://localhost:'+ port +'/newMessage', {
+    fetch(url+ '/newMessage', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -171,7 +205,7 @@ function sendMessage() {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data.id)
+            //console.log(data.id)
             getMessages(data.id);
         });
 }

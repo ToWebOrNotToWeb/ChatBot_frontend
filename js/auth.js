@@ -2,7 +2,18 @@
 localStorage.removeItem('token');
 const loginForm = document.querySelector('#login');
 const registerForm = document.querySelector('#register');
-const port = 8003;
+//const port = 8003;
+let url = '';
+
+if (window.location.href.includes('local') || window.location.href.includes('127')) {
+    url = 'http://localhost:8003';
+    console.log('local');
+    console.log(url);
+} else {
+    url = 'unknown';
+    console.log('Online');
+    console.log(url);
+};
 
 
 /*=========================================Form===========================================*/
@@ -49,7 +60,7 @@ function login(event) {
     };
     console.log(data);
     localStorage.setItem('one', data);
-    fetch('http://localhost:'+ port +'/login', {
+    fetch(url + '/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -80,6 +91,11 @@ function showRegister() {
 }
 
 function register() {
+    console.log('registering');
+    console.log(url);
+    console.log('registering');
+    console.log(url + '/register');
+
     const register = document.querySelector('#register');
     let name = register.querySelector('#name');
     let email = register.querySelector('#Remail');
@@ -94,7 +110,7 @@ function register() {
         email: email.value,
         password: password.value
     };
-    fetch('http://localhost:'+ port +'/register', {
+    fetch(url + '/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

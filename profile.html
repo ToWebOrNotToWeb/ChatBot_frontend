@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/profile.css">
+    <script src="js/profile.js" defer></script>
+    <title>Settings</title>
+</head>
+<body>
+    <header>
+        <h1>ToWebOrNotToWeb</h1>
+    </header>
+    <main>
+        <div class="content">
+            <h1>Options</h1>
+            <fieldset>
+                <legend>Informations Profile</legend>
+                <div>
+                    <label for="name">Nom</label>
+                    <input type="text" id="name" placeholder="Nom" >
+
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="E-mail" >
+
+                    <label for="password">Mot de pass</label>
+                    <input type="password" id="password" placeholder="Mot de passe" >
+
+                
+                    <button onclick="updateProfile()">Mettre à Jour</button>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Déconnection</legend>
+
+                <label for="">Se déconnecter =></label>
+
+                <button onclick="logout()">Déconnection</button>
+            </fieldset>
+            <fieldset>
+                <legend>Suprimer le compte</legend>
+                
+                <label for="confirm">Entrer "SUPPRIMER" pour confirmer la supressions.</label>
+                <input type="text" id="confirm" placeholder="SUPPRIMER" required>
+
+                <button onclick="deleteProfile()">Valider</button>
+            </fieldset>
+        </div>
+    </main>
+    <footer></footer>
+</body>
+</html>

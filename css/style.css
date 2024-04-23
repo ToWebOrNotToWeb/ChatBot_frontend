@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Tauri&display=swap');
 
+:root {
+    --header-bg-color: #333;
+    --bg-color: #359bf8;
+    /* --accent-color: #9BF835;
+    --tertiary-color: #F8359B; */
+    --accent-color: #F8359B;
+    --tertiary-color:  #9BF835;
+    --text-light-color: #fff;
+    --text-dark-color: #333;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -10,8 +21,8 @@
 }
 
 header {
-    background-color: #333;
-    color: white;
+    background-color: var(--header-bg-color);
+    color: var(--text-light-color);
     padding: 10px;
     text-align: center;
     height: 60px;
@@ -22,15 +33,16 @@ main {
     justify-content: center;
     align-items: center;
     height: calc(100vh - 60px);
-    background-color: #47759a;
+    background-color: var(--bg-color);
 }
 
 aside {
     height: calc(100vh - 60px);
     width: 300px;
-    background-color: white;
+    background-color: var(--text-light-color);
     position: absolute;
     left: 0;
+    border: solid 1px var(--header-bg-color);
 }
 
 aside ul {
@@ -48,12 +60,12 @@ aside ul li {
 }
 
 aside ul li:hover {
-    background-color: #6f6fff;
+    background-color: var(--tertiary-color);
 }
 
 aside ul li.active {
-    background-color: #5050ff;
-    color: white;
+    background-color: var(--accent-color);
+    color: var(--text-light-color);
 }
 
 aside ul li button {
@@ -64,16 +76,21 @@ aside ul li button {
 }
 
 aside ul li button:hover {
-    color: #6f6fff;
+    color: var(--tertiary-color);
 }
 
 #newDiscution {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #5050ff;
+    color: var(--accent-color);
     cursor: pointer;
     margin-top: 20px;
+}
+
+.error {
+    border: red 2px solid;
+    box-shadow: 0 0 10px red;
 }
 
 .prompt {
@@ -90,7 +107,7 @@ aside ul li button:hover {
 }
 
 .prompt div {
-    background-color: white;
+    background-color: var(--text-light-color);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -140,8 +157,8 @@ aside img:hover {
     position: absolute;
     bottom: 70px;
     right: 15px;
-    background-color: #5050ff;
-    color: white;
+    background-color: var(--accent-color);
+    color: var(--text-light-color);
 }
 
 aside img:hover + .menu {
@@ -158,12 +175,17 @@ aside img:hover + .menu {
 }
 
 .menu p:hover {
-    background-color: #6f6fff;
+    background-color: var(--tertiary-color);
+}
+
+.menu p a {
+    color: var(--text-light-color);
+    text-decoration: none;
 }
 
 #chat-box {
     font-size: 1.2rem;
-    background-color: white;
+    background-color: var(--text-light-color);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); 
     width: 50%;
@@ -184,13 +206,13 @@ aside img:hover + .menu {
 #chat-container .assistant {
     text-align: left;
     margin-right: 50%;
-    color: blue;
+    color: var(--accent-color);
 }
 
 #chat-container .user {
     text-align: right;
     margin-left: 50%;
-    color: green;
+    color: var(--text-dark-color);
 }
 
 #chat-control {
@@ -214,12 +236,32 @@ aside img:hover + .menu {
     border-radius: 0 0 5px 0;
 }
 
+.chat-format {
+    padding: 10px;
+    line-height: 1.6;
+}
+
+.chat-format ul {
+    margin-left: 20px;
+    list-style-type: disc; /* Adds bullet points to list items */
+}
+
+.chat-format li {
+    margin-top: 20px;
+
+}
+
+.chat-format p {
+    text-indent: 20px; /* First line indent for paragraphs */
+    margin-top: 20px;
+}
+
 .line {
     display: inline-block;
     width: 15px;
     height: 15px;
     border-radius: 15px;
-    background-color: #4b9cdb;
+    background-color: var(--tertiary-color);
 }
 
 .loader .line:nth-last-child(1) {

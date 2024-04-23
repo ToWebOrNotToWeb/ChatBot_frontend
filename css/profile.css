@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Tauri&display=swap');
+
+:root {
+    --header-bg-color: #333;
+    --bg-color: #359bf8;
+    /* --accent-color: #9BF835;
+    --tertiary-color: #F8359B; */
+    --accent-color: #F8359B;
+    --tertiary-color:  #9BF835;
+    --text-light-color: #fff;
+    --text-dark-color: #333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Tauri", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+header {
+    background-color: var(--header-bg-color);
+    color: var(--text-light-color);
+    padding: 10px;
+    text-align: center;
+    height: 60px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px);
+    background-color: var(--bg-color);
+}
+
+.content {
+    background-color: var(--text-light-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content h1 {
+    margin-bottom: 20px;
+}
+
+.content fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.content fieldset legend {
+    padding: 0 5px;
+}
+
+.content fieldset input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.content fieldset button {
+    padding: 5px 10px;
+    background-color: var(--header-bg-color);
+    color: var(--text-light-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.content fieldset button:hover {
+    background-color: var(--tertiary-color);
+}
+
