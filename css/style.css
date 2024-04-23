@@ -20,6 +20,13 @@
     font-style: normal;
 }
 
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden;
+}
+
 header {
     background-color: var(--header-bg-color);
     color: var(--text-light-color);
@@ -144,7 +151,7 @@ aside img {
     height: 50px;
     object-fit: cover;
     margin-right: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 aside img:hover {
@@ -155,7 +162,7 @@ aside img:hover {
 .menu {
     display: none;
     position: absolute;
-    bottom: 70px;
+    bottom: 80px;
     right: 15px;
     background-color: var(--accent-color);
     color: var(--text-light-color);

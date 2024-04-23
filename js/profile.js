@@ -20,6 +20,10 @@ if (window.location.href.includes('local') || window.location.href.includes('127
 
 getProfile();
 
+function goHome() {
+    window.location.href = 'index.html';
+}
+
 function logout() {
     localStorage.removeItem('token');
     window.location.href = 'auth.html';
