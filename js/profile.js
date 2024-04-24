@@ -86,6 +86,34 @@ function updateProfile() {
     })
 }
 
+function updatePicture() {
+    let picture = document.getElementById('picture');
+
+    let data = {
+        picture: picture.value
+    }
+
+    fetch(`${url}/updatePicture`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': token 
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        if (data.status === 'success') {
+            alert('Picture updated');
+            getProfile();
+        } else {
+            alert('Picture not updated');
+        }
+    })
+
+}
+
 function deleteProfile() {
     let confirm = document.getElementById('confirm');
 

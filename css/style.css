@@ -18,9 +18,33 @@
     font-family: "Tauri", sans-serif;
     font-weight: 400;
     font-style: normal;
+}       
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+
+::-webkit-scrollbar-track {
+background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+background: var(--text-dark-color);
+border-radius: 50px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    cursor: grab;
+    background: var(--tertiary-color);
 }
 
 body {
+    display: grid;
+    grid-template-rows: 60px calc(100vh - 60px);
+    grid-template-columns: 300px calc(100vw - 300px);
     height: 100vh;
     margin: 0;
     padding: 0;
@@ -28,6 +52,9 @@ body {
 }
 
 header {
+    display: grid;
+    grid-row: 1 / 2;
+    grid-column: 1 / 3;
     background-color: var(--header-bg-color);
     color: var(--text-light-color);
     padding: 10px;
@@ -36,20 +63,24 @@ header {
 }
 
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 60px);
+    display: grid;
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
     background-color: var(--bg-color);
 }
 
 aside {
-    height: calc(100vh - 60px);
-    width: 300px;
+    display: grid;
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
     background-color: var(--text-light-color);
-    position: absolute;
-    left: 0;
     border: solid 1px var(--header-bg-color);
+}
+
+aside section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 aside ul {
@@ -191,48 +222,47 @@ aside img:hover + .menu {
 }
 
 #chat-box {
-    font-size: 1.2rem;
-    background-color: var(--text-light-color);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); 
-    width: 50%;
-    z-index: 5;
-    border: 5px solid black;
-}
+    display: grid;
+    grid-template-rows:20px 1fr 60px 20px;
+    grid-template-columns: 15% 70% 15%;
+    overflow-y: hidden;
+} 
 
 #chat-container {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
     display: flex;
     flex-direction: column;
     gap: 30px;
-    width: 100%;
-    padding: 20px;
+    padding-left: 10%;
+    padding-right: 10%;
     overflow-y: scroll;
-    height: 60vh;
-}
-
-#chat-container .assistant {
-    text-align: left;
-    margin-right: 50%;
-    color: var(--accent-color);
-}
-
-#chat-container .user {
-    text-align: right;
-    margin-left: 50%;
-    color: var(--text-dark-color);
+    height: 100%;
+    text-align:justify;
 }
 
 #chat-control {
+    grid-row: 3 / 4;
+    grid-column: 2 / 3;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: var(--text-light-color);
+    border-radius: 50px;
 }
 
 #chat-control input {
-    width: 90%;
+    width: 80%;
+    height: 50px;
     padding: 10px;
     font-size: 1.2rem;
-    border: 1px solid black;
-    border-radius: 0 0 0 5px;
+    border: transparent;
+    /*border-radius: 0 0 0 5px; */
+}
+
+#chat-control input:focus {
+    outline: none;
 }
 
 #chat-control button {
@@ -240,25 +270,56 @@ aside img:hover + .menu {
     font-size: 1.2rem;
     width: 10%;
     cursor: pointer;
-    border-radius: 0 0 5px 0;
+    border: none;
+    height: auto;
+    width: auto;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    color: var(--text-light-color);
 }
 
-.chat-format {
+#chat-control button:hover {
+    background-color: var(--tertiary-color);
+}
+
+#chat-response {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+#chat-response  section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#chat-response img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.chat-format .textual {
     padding: 10px;
     line-height: 1.6;
 }
 
-.chat-format ul {
+.chat-format .textual ul {
     margin-left: 20px;
     list-style-type: disc; /* Adds bullet points to list items */
 }
 
-.chat-format li {
+.chat-format .textual li {
     margin-top: 20px;
 
 }
 
-.chat-format p {
+.chat-format .textual p {
     text-indent: 20px; /* First line indent for paragraphs */
     margin-top: 20px;
 }

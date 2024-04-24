@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./img/logo.png">
     <link rel="stylesheet" href="css/profile.css">
     <script src="js/profile.js" defer></script>
     <title>Settings</title>
@@ -13,35 +14,43 @@
     </header>
     <main>
         <div class="content">
-            <h1>Options</h1>
+            <h1>Settings</h1>
             <fieldset>
-                <legend>Informations Profile</legend>
+                <legend>Profil informations</legend>
                 <div>
-                    <label for="name">Nom</label>
-                    <input type="text" id="name" placeholder="Nom" >
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Name" >
 
                     <label for="email">E-mail</label>
                     <input type="email" id="email" placeholder="E-mail" >
 
-                    <label for="password">Mot de pass</label>
-                    <input type="password" id="password" placeholder="Mot de passe" >
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Password" >
 
                 
-                    <button onclick="updateProfile()">Mettre à Jour</button>
+                    <button onclick="updateProfile()">Update</button>
                 </div>
             </fieldset>
             <fieldset>
-                <legend>Déconnection</legend>
+                <legend>Profil picture</legend>
+                <div>
+                    <input type="file" id="picture" accept="image/png, image/jpeg" >
 
-                <label for="">Se déconnecter =></label>
-
-                <button onclick="logout()">Déconnection</button>
+                    <button onclick="updatePicture()">Update</button>
+                </div>
             </fieldset>
             <fieldset>
-                <legend>Suprimer le compte</legend>
+                <legend>LogOut</legend>
+
+                <label for="">To logout =></label>
+
+                <button onclick="logout()">here</button>
+            </fieldset>
+            <fieldset>
+                <legend>Manage account</legend>
                 
-                <label for="confirm">Entrer "SUPPRIMER" pour confirmer la supressions.</label>
-                <input type="text" id="confirm" placeholder="SUPPRIMER" required>
+                <label for="confirm">Entrer "DELETE" to confirm the supression.</label>
+                <input type="text" id="confirm" placeholder="DELETE" required>
 
                 <button onclick="deleteProfile()">Valider</button>
             </fieldset>

@@ -20,6 +20,14 @@ if (window.location.href.includes('local') || window.location.href.includes('127
 
 getThreads()
 
+function userMessage() {
+
+}
+
+function assistantMessage() {
+    
+}
+
 function logout() {
     localStorage.removeItem('token');
     window.location.href = 'auth.html';
@@ -129,6 +137,8 @@ function deleteThread(Id) {
         .then(response => response.json())
         .then(data => {
             //console.log(data);
+            let chatContainer = document.getElementById('chat-container');
+            chatContainer.innerHTML = '';
             getThreads();
         });
 }
@@ -172,11 +182,27 @@ function getMessages(Id) {
             messages.messages.content.forEach(element => {
                 if (element.role != 'system') {
                     let div = document.createElement('div');
-                    div.innerHTML = formatResponse(element.content);
-                    div.id = 'chat-response';
                     let cl = 'chat-format';
+                    let section = document.createElement('section');
+                    let img = document.createElement('img');
+                    let name = document.createElement('p');
+                    let p = document.createElement('p');
+                    div.id = 'chat-response';
                     div.classList.add(element.role);
                     div.classList.add(cl);
+                    if (element.role === 'user') {
+                        img.src = 'img/merlin2.jpg';
+                        name.innerHTML = 'You :';
+                    } else {
+                        img.src = 'img/logo.png';
+                        name.innerHTML = 'ChatBot :';
+                    }
+                    p.innerHTML = formatResponse(element.content);
+                    p.classList.add('textual');
+                    section.appendChild(img);
+                    section.appendChild(name);
+                    div.appendChild(section);
+                    div.appendChild(p);
                     chatContainer.appendChild(div);
                 } 
             })
@@ -185,13 +211,31 @@ function getMessages(Id) {
 }
 
 function sendMessage() {
+    if (document.querySelector('.active') === null) {
+        alert('You must first create a discution');
+        return;
+    }
     let userMessage = userInput.value;
     userInput.value = '';
     let div = document.createElement('div');
-    div.innerHTML = userMessage;
+    let cl = 'chat-format';
+    let section = document.createElement('section');
+    let img = document.createElement('img');
+    let name = document.createElement('p');
+    let p = document.createElement('p');
+    div.id = 'chat-response';
     div.classList.add('user');
+    div.classList.add(cl);
+    img.src = 'img/merlin2.jpg';
+    name.innerHTML = 'You :';
+    p.innerHTML = userMessage;
+    p.classList.add('textual');
+    section.appendChild(img);
+    section.appendChild(name);
+    div.appendChild(section);
+    div.appendChild(p);
     chatContainer.appendChild(div);
-    chatContainer.appendChild(loader());
+
     chatContainer.scrollTop = chatContainer.scrollHeight;
     let chatId = document.querySelector('.active').id;
 
