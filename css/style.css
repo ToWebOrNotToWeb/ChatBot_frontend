@@ -353,6 +353,7 @@ aside img:hover + .menu {
     height: 15px;
     border-radius: 15px;
     background-color: var(--tertiary-color);
+    margin-bottom: 50px;
 }
 
 .loader .line:nth-last-child(1) {

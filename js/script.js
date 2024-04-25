@@ -339,6 +339,10 @@ function sendMessage() {
     div.appendChild(p);
     chatContainer.appendChild(div);
 
+    // show the loader
+    chatContainer.appendChild(loader());
+
+    // scroll to the bottom of the chat container
     chatContainer.scrollTop = chatContainer.scrollHeight;
     let chatId = document.querySelector('.active').id;
 
