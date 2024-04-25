@@ -1,13 +1,19 @@
+// ========================================================================================================
+// Check if user is logged in before allowing access to the page
 if (!localStorage.getItem('token')) {
     window.location.href = 'auth.html';
 }
+
+// ========================================================================================================
+// Declare useful variables
 const token = localStorage.getItem('token');
 const allDiscution = document.getElementById('allDiscution');
 const chatContainer = document.getElementById('chat-container');
 const userInput = document.getElementById('input');
-//const port = 8003;
-let url = '';
 
+// ========================================================================================================
+// Check if the user is on the local or online version of the website
+let url = '';
 if (window.location.href.includes('local') || window.location.href.includes('127')) {
     url = 'http://localhost:8003';
     console.log('local');
@@ -18,8 +24,12 @@ if (window.location.href.includes('local') || window.location.href.includes('127
     console.log(url);
 };
 
+// ========================================================================================================
+// Get the user's profile informations
 getProfile();
 
+// ========================================================================================================
+// uncategorized functions
 function goHome() {
     window.location.href = 'index.html';
 }
@@ -55,6 +65,9 @@ function convertFileToBase64(inputElement, callback) {
     reader.readAsDataURL(file);
 }
 
+
+// ========================================================================================================
+// Get the user's profile informations
 function getProfile(){
     //console.log('getProfile');
 
@@ -68,6 +81,7 @@ function getProfile(){
     .then(response => response.json())
     .then(data => {
         //console.log(data);
+        // clear eveything in the profile
         let name = document.getElementById('name');
         let email = document.getElementById('email');
         let password = document.getElementById('password');
@@ -76,16 +90,19 @@ function getProfile(){
         email.value = '';
         password.value = '';
 
+        // set the profile informations
         name.placeholder = data.name;
         email.placeholder = data.email;
     })
 }
 
+// ========================================================================================================
+// Update user's profile informations
 function updateProfile() {
     let name = document.getElementById('name');
     let email = document.getElementById('email');
     let password = document.getElementById('password');
-
+    // send the data to the server (all the check are done on the server side)
     let data = {
         name: name.value,
         email: email.value,
@@ -102,9 +119,10 @@ function updateProfile() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        //console.log(data);
         if (data.status === 'success') {
             alert('Profile updated');
+            // refresh the profile informations
             getProfile();
         } else {
             alert('Profile not updated');
@@ -112,6 +130,8 @@ function updateProfile() {
     })
 }
 
+// ========================================================================================================
+// Update user's profile picture
 function updatePicture() {
     let picture = document.getElementById('picture');
     if (picture.files && picture.files[0]) {
@@ -166,6 +186,8 @@ function updatePicture() {
 
 }
 
+// ========================================================================================================
+// Delete User's account
 function deleteProfile() {
     let confirm = document.getElementById('confirm');
 
@@ -182,6 +204,7 @@ function deleteProfile() {
         console.log(data);
         if (data.status === 'success') {
             alert('Profile deleted');
+            // log out the user
             logout();
         } else {
             alert('Profile not deleted');
