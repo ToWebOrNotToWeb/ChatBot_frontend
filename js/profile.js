@@ -3,6 +3,7 @@
 if (!localStorage.getItem('token')) {
     window.location.href = 'auth.html';
 }
+checkToken();
 
 // ========================================================================================================
 // Declare useful variables
@@ -30,6 +31,20 @@ getProfile();
 
 // ========================================================================================================
 // uncategorized functions
+function checkToken() {
+    fetch('http://localhost:8003/verifyToken', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': localStorage.getItem('token')
+        }
+    }).then(response => {
+        if (response.status === 403) {
+            logout();
+        }
+    });
+}
+
 function goHome() {
     window.location.href = 'index.html';
 }
