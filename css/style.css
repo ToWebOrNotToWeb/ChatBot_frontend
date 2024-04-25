@@ -1,15 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Tauri&display=swap');
 
+
 :root {
     --header-bg-color: #333;
     --bg-color: #359bf8;
-    /* --accent-color: #9BF835;
-    --tertiary-color: #F8359B; */
-    --accent-color: #F8359B;
-    --tertiary-color:  #9BF835;
+    --accent-color: #9BF835;
+    --tertiary-color: #F8359B;
+    /*--accent-color: #F8359B;
+    --tertiary-color:  #9BF835;*/
+    /*--bg-color: #4293E3;
+    --accent-color: #93E342;
+    --tertiary-color: #E34293;*/
     --text-light-color: #fff;
     --text-dark-color: #333;
 }
+
 
 * {
     margin: 0;
@@ -121,7 +126,7 @@ aside ul li button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--accent-color);
+    color: var(--tertiary-color);
     cursor: pointer;
     margin-top: 20px;
 }
@@ -192,34 +197,48 @@ aside img:hover {
 
 .menu {
     display: none;
+    flex-direction: column;
     position: absolute;
     bottom: 80px;
     right: 15px;
     background-color: var(--accent-color);
     color: var(--text-light-color);
+    height: 90px;
+}
+
+.menu img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    margin-right: 20px;
 }
 
 aside img:hover + .menu {
-    display: block;
+    display: flex;
 } 
 
 .menu:hover {
-    display: block;
+    display: flex;
 }
 
-.menu p {
+.menu .menu-sub {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
     padding: 15px;
     cursor: pointer;
+    height: 45px;
 }
 
-.menu p:hover {
+.menu .menu-sub img {
+    margin: 0;
+}
+
+.menu .menu-sub:hover {
     background-color: var(--tertiary-color);
 }
 
-.menu p a {
-    color: var(--text-light-color);
-    text-decoration: none;
-}
 
 #chat-box {
     display: grid;
@@ -296,12 +315,16 @@ aside img:hover + .menu {
     align-items: center;
 }
 
-#chat-response img {
+#chat-response .img {
     width: 50px;
     height: 50px;
+    background-color: var(--header-bg-color);
+    color: var(--text-light-color);
     border-radius: 50%;
     object-fit: cover;
     margin-right: 20px;
+    font-size: 40px;
+    text-align: center;
 }
 
 .chat-format .textual {
@@ -355,3 +378,7 @@ animation: loadingC 0.7s 0.3s linear infinite;
     }
 }
 
+footer {
+    display: none;
+    opacity: 0;
+}

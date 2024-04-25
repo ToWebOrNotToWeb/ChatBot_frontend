@@ -29,6 +29,32 @@ function logout() {
     window.location.href = 'auth.html';
 }
 
+function convertFileToBase64(inputElement, callback) {
+    // Ensure a file has been selected
+    if (inputElement.files.length === 0) {
+        console.error("No file selected.");
+        return;
+    }
+
+    var file = inputElement.files[0];
+    var reader = new FileReader();
+
+    // Setup onload event for reader
+    reader.onload = function() {
+        // Get the Base64 string
+        var base64String = reader.result;
+        
+        // Remove the data URL prefix (if necessary) and return the raw base64 string
+        var base64 = base64String.split(',')[1];
+        
+        // Call the callback function with the Base64 string
+        callback(base64);
+    };
+
+    // Read the file as a Data URL (Base64)
+    reader.readAsDataURL(file);
+}
+
 function getProfile(){
     //console.log('getProfile');
 
@@ -88,28 +114,54 @@ function updateProfile() {
 
 function updatePicture() {
     let picture = document.getElementById('picture');
+    if (picture.files && picture.files[0]) {
+        // Access the first file in the input file list
+        let file = picture.files[0];
 
-    let data = {
-        picture: picture.value
+        // Check if the file size is greater than 5 KB
+        if (file.size > 5120) { // 5 KB = 5120 bytes
+            alert('The file size should be 5KB or less.');
+            // Clear the input if the file is too large
+            picture.value = '';
+        } 
     }
-
-    fetch(`${url}/updatePicture`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'token': token 
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        if (data.status === 'success') {
-            alert('Picture updated');
-            getProfile();
-        } else {
-            alert('Picture not updated');
+    // check containt only one . in the file name
+    if (picture.value.split('.').length !== 2) {
+        alert('Invalid  file name');
+        picture.value = '';
+        return;
+    }
+    // check theire is only one file 
+    if (picture.files.length !== 1) {
+        alert('To many files selected');
+        picture.value = '';
+        return;
+    }
+    let extention = picture.value.split('.').pop();
+    convertFileToBase64(picture, (base64) => {
+        let data = {
+            picture: base64,
+            extention: extention
         }
+        fetch(`${url}/updatePicture`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': token 
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            //console.log(data);
+            picture.value = '';
+            if (data.status === 'success') {
+                alert('Picture updated');
+                getProfile();
+            } else {
+                alert('Picture not updated');
+            }
+        })
     })
 
 }

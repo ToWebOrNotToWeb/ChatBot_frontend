@@ -18,15 +18,10 @@ if (window.location.href.includes('local') || window.location.href.includes('127
     console.log(url);
 };
 
+
+getPicture()
 getThreads()
 
-function userMessage() {
-
-}
-
-function assistantMessage() {
-    
-}
 
 function logout() {
     localStorage.removeItem('token');
@@ -43,6 +38,10 @@ function loader() {
         loader.appendChild(div);
     }
     return loader;
+}
+
+function profile() {
+    window.location.href = 'profile.html';
 }
 
 function showPrompt() {
@@ -167,6 +166,22 @@ function createThread() {
 
 }
 
+function getPicture() {
+    fetch(url+'/getPicture', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.result);
+            localStorage.setItem('picture', data.result);
+            localStorage.setItem('extention', data.extention);
+        });
+}
+
 function getMessages(Id) {
     fetch(url+'/getMessages', {
         method: 'POST',
@@ -184,19 +199,28 @@ function getMessages(Id) {
                     let div = document.createElement('div');
                     let cl = 'chat-format';
                     let section = document.createElement('section');
-                    let img = document.createElement('img');
+                    let img = null;
                     let name = document.createElement('p');
                     let p = document.createElement('p');
                     div.id = 'chat-response';
                     div.classList.add(element.role);
                     div.classList.add(cl);
-                    if (element.role === 'user') {
-                        img.src = 'img/merlin2.jpg';
+                    let profile = localStorage.getItem('picture');
+                    let extention = localStorage.getItem('extention');
+                    if (element.role === 'user' && profile.length < 100) {
+                        img = document.createElement('div');
+                        img.innerHTML = profile.charAt(0);
+                        name.innerHTML = 'You :';
+                    } else if (element.role === 'user' && profile.length > 100) {
+                        img = document.createElement('img');
+                        img.src = `data:image/${extention};base64,${profile}`;
                         name.innerHTML = 'You :';
                     } else {
+                        img = document.createElement('img');
                         img.src = 'img/logo.png';
                         name.innerHTML = 'ChatBot :';
                     }
+                    img.classList.add('img');
                     p.innerHTML = formatResponse(element.content);
                     p.classList.add('textual');
                     section.appendChild(img);
@@ -220,14 +244,23 @@ function sendMessage() {
     let div = document.createElement('div');
     let cl = 'chat-format';
     let section = document.createElement('section');
-    let img = document.createElement('img');
+    let img = null;
     let name = document.createElement('p');
     let p = document.createElement('p');
     div.id = 'chat-response';
     div.classList.add('user');
     div.classList.add(cl);
-    img.src = 'img/merlin2.jpg';
-    name.innerHTML = 'You :';
+    let profile = localStorage.getItem('picture');
+    if (profile.length < 100) {
+        img = document.createElement('div');
+        img.innerHTML = profile.charAt(0);
+        name.innerHTML = 'You :';
+    } else {
+        img = document.createElement('img');
+        img.src = `data:image/${extention};base64,${profile}`;
+        name.innerHTML = 'You :';
+    }
+    img.classList.add('img');
     p.innerHTML = userMessage;
     p.classList.add('textual');
     section.appendChild(img);
