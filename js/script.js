@@ -33,8 +33,9 @@ getThreads()
 // ========================================================================================================
 // uncategorized functions
 function checkToken() {
+    console.log('checking token');
     fetch('http://localhost:8003/verifyToken', {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'token': localStorage.getItem('token')

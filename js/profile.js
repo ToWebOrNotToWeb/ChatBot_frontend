@@ -33,7 +33,7 @@ getProfile();
 // uncategorized functions
 function checkToken() {
     fetch('http://localhost:8003/verifyToken', {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'token': localStorage.getItem('token')
