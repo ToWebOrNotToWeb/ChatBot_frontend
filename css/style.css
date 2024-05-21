@@ -6,8 +6,6 @@
     --bg-color: #359bf8;
     --accent-color: #9BF835;
     --tertiary-color: #F8359B;
-    /*--accent-color: #F8359B;
-    --tertiary-color:  #9BF835;*/
     /*--bg-color: #4293E3;
     --accent-color: #93E342;
     --tertiary-color: #E34293;*/
@@ -353,6 +351,7 @@ aside img:hover + .menu {
     height: 15px;
     border-radius: 15px;
     background-color: var(--tertiary-color);
+    margin-bottom: 50px;
 }
 
 .loader .line:nth-last-child(1) {
