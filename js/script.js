@@ -20,7 +20,7 @@ if (window.location.href.includes('local') || window.location.href.includes('127
     console.log('local');
     console.log(url);
 } else {
-    url = 'unknown';
+    url = 'https://chatbot-backend-o6is.onrender.com';
     console.log('Online');
     console.log(url);
 };
