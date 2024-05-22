@@ -3,7 +3,6 @@
 if (!localStorage.getItem('token')) {
     window.location.href = 'auth.html';
 }
-checkToken();
 
 // ========================================================================================================
 // Declare useful variables
@@ -31,19 +30,6 @@ getProfile();
 
 // ========================================================================================================
 // uncategorized functions
-function checkToken() {
-    fetch('http://localhost:8003/verifyToken', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'token': localStorage.getItem('token')
-        }
-    }).then(response => {
-        if (response.status === 403) {
-            logout();
-        }
-    });
-}
 
 function goHome() {
     window.location.href = 'index.html';
@@ -86,11 +72,11 @@ function convertFileToBase64(inputElement, callback) {
 function getProfile(){
     //console.log('getProfile');
 
-    fetch(`${url}/profile`, {
+    fetch(url + '/user/profile', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'token': token 
+            'Authorization': 'Bearer ' + token
         }
     })
     .then(response => response.json())
@@ -124,11 +110,11 @@ function updateProfile() {
         password: password.value
     }
 
-    fetch(`${url}/updateProfile`, {
+    fetch(url + '/user/profile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'token': token 
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify(data)
     })
@@ -178,11 +164,11 @@ function updatePicture() {
             picture: base64,
             extention: extention
         }
-        fetch(`${url}/updatePicture`, {
+        fetch(url + '/user/picture', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'token': token 
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify(data)
         })
@@ -206,11 +192,11 @@ function updatePicture() {
 function deleteProfile() {
     let confirm = document.getElementById('confirm');
 
-    fetch(`${url}/deleteProfile`, {
+    fetch(url + '/user/deleteProfile', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'token': token 
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({ confirm: confirm.value })
     })
