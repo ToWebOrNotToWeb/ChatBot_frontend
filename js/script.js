@@ -3,7 +3,6 @@
 if (!localStorage.getItem('token')) {
     window.location.href = 'auth.html';
 }
-checkToken();
 
 // ========================================================================================================
 // Declare usefull variables
@@ -32,27 +31,13 @@ getThreads()
 
 // ========================================================================================================
 // uncategorized functions
-function checkToken() {
-    console.log('checking token');
-    fetch('http://localhost:8003/verifyToken', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'token': localStorage.getItem('token')
-        }
-    }).then(response => {
-        if (response.status === 403) {
-            logout();
-        }
-    });
-}
 
 function getPicture() {
-    fetch(url+'/getPicture', {
+    fetch(url+'/user/picture', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'token': token
+            'Authorization': 'Bearer ' + token
         }
     })
         .then(response => response.json())
@@ -107,11 +92,11 @@ function formatResponse(text) {
 function getThreads() {
     //console.log('getting threads');
 
-    fetch(url+'/getThreads', {
+    fetch(url+'/api/discution/get', {
         method: 'GET', 
         headers: {
             'Content-Type': 'application/json',
-            'token': token 
+            'Authorization': 'Bearer ' + token
         },
     })
     .then(response => {
@@ -196,11 +181,11 @@ function createThread() {
     // close the popup window
     undo();
 
-    fetch(url+'/newThread', {
+    fetch(url+'/api/discution/new', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'token': token
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({ chatName: newName })
     }).then(response => response.json())
@@ -217,11 +202,11 @@ function createThread() {
 // ========================================================================================================
 // Delete thread
 function deleteThread(Id) {
-    fetch(url+'/deleteThread', {
+    fetch(url+'/api/discution/delete', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'token': token
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({ chatId: Id })
     })
@@ -241,11 +226,11 @@ function deleteThread(Id) {
 // ========================================================================================================
 // send and get messages
 function getMessages(Id) {
-    fetch(url+'/getMessages', {
+    fetch(url+'/api/message/get', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'token': token
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({ chatId: Id })
     })
@@ -347,11 +332,11 @@ function sendMessage() {
     chatContainer.scrollTop = chatContainer.scrollHeight;
     let chatId = document.querySelector('.active').id;
 
-    fetch(url+ '/newMessage', {
+    fetch(url+ '/api/message/new', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'token': token
+            'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({ chatId: chatId, message: userMessage })
     })

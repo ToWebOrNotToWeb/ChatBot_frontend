@@ -73,7 +73,7 @@ function login(event) {
 
     //console.log(data);
     //localStorage.setItem('one', data);
-    fetch(url + '/login', {
+    fetch(url + '/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -122,7 +122,7 @@ function register() {
         password: password.value
     };
 
-    fetch(url + '/register', {
+    fetch(url + '/auth/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
