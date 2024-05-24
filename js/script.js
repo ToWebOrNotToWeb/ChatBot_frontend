@@ -266,7 +266,7 @@ function getMessages(Id) {
                     } else {
                         img = document.createElement('img');
                         img.src = 'img/logo.png';
-                        name.innerHTML = 'ChatBot :';
+                        name.innerHTML = 'T.W.O.N.T.B. :';
                     }
                     img.classList.add('img');
                     p.innerHTML = formatResponse(element.content);
@@ -342,9 +342,14 @@ function sendMessage() {
     })
         .then(response => response.json())
         .then(data => {
-            //console.log(data.id)
+            console.log(data)
             // refresh the messages to display bot response
+            if (data.status != 500) {
             getMessages(data.id);
+            } else {
+                alert('An error occured while sending the message');
+                reload()
+            }
         });
 }
 
