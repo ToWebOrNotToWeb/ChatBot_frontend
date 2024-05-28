@@ -139,12 +139,11 @@ function updatePicture() {
         // Access the first file in the input file list
         let file = picture.files[0];
 
-        // Check if the file size is greater than 5 KB
-        if (file.size > 153600) { // 5 KB = 5120 bytes
-            alert('The file size should be 5KB or less.');
+        if (file.size > 7692) { // 7.7 KB = 7692 bytes
+            alert('The file size should be 7.7KB or less.');
             // Clear the input if the file is too large
             picture.value = '';
-        } 
+        }
     }
     // check containt only one . in the file name
     if (picture.value.split('.').length !== 2) {
