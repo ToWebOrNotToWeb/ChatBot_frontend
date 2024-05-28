@@ -140,7 +140,7 @@ function updatePicture() {
         let file = picture.files[0];
 
         // Check if the file size is greater than 5 KB
-        if (file.size > 5120) { // 5 KB = 5120 bytes
+        if (file.size > 153600) { // 5 KB = 5120 bytes
             alert('The file size should be 5KB or less.');
             // Clear the input if the file is too large
             picture.value = '';
