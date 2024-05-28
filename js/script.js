@@ -25,6 +25,13 @@ if (window.location.href.includes('local') || window.location.href.includes('127
 };
 
 // ========================================================================================================
+// Web Socket
+// const socket = io('http://localhost:8004');
+// socket.emit('connectMessage', () => {
+//     console.log('trying to get the message');
+// });
+
+// ========================================================================================================
 // retrieve the user's profile picture and his discutions
 getPicture()
 getThreads()
@@ -353,9 +360,125 @@ function sendMessage() {
         });
 }
 
-// listen for the enter key to send the message
+function sendMessageStream() {
+    // Check if the user is in a discussion
+    if (document.querySelector('.active') === null) {
+        alert('You must first create a discussion');
+        return;
+    }
+
+    // Show user message
+    let userMessage = userInput.value;
+    userInput.value = '';
+    let div = document.createElement('div');
+    let cl = 'chat-format';
+    let section = document.createElement('section');
+    let img = null;
+    let name = document.createElement('p');
+    let p = document.createElement('p');
+    div.id = 'chat-response';
+    div.classList.add('user');
+    div.classList.add(cl);
+    let profile = localStorage.getItem('picture');
+    let extension = localStorage.getItem('extension');
+
+    // Check the length of the profile to determine which one to display and how
+    if (profile.length < 100) {
+        img = document.createElement('div');
+        img.innerHTML = profile.charAt(0);
+        name.innerHTML = 'You :';
+    } else {
+        img = document.createElement('img');
+        img.src = `data:image/${extension};base64,${profile}`;
+        name.innerHTML = 'You :';
+    }
+
+    img.classList.add('img');
+    p.innerHTML = userMessage;
+    p.classList.add('textual');
+    section.appendChild(img);
+    section.appendChild(name);
+    div.appendChild(section);
+    div.appendChild(p);
+    chatContainer.appendChild(div);
+
+    // Show the loader
+    chatContainer.appendChild(loader());
+
+    // Scroll to the bottom of the chat container
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    let chatId = document.querySelector('.active').id;
+
+    fetch(url + '/api/message/pipeline', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ chatId: chatId, message: userMessage })
+    })
+    .then(response => {
+        if (!response.body) {
+            throw new Error("No response body from server");
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
+
+        function processText({ done, value }) {
+            if (done) {
+                return;
+            }
+
+            buffer += decoder.decode(value, { stream: true });
+
+            let position;
+            while ((position = buffer.indexOf('\n')) >= 0) {
+                const line = buffer.slice(0, position).trim();
+                buffer = buffer.slice(position + 1);
+                if (line.startsWith('data: ')) {
+                    const data = line.slice(6); // Remove the 'data: ' part
+                    if (data !== '[DONE]') {
+                        try {
+                            const json = JSON.parse(data);
+                            if (json.choices && json.choices[0].delta && json.choices[0].delta.content) {
+                                const content = json.choices[0].delta.content;
+                                // Process the chunk
+                                console.log(content); // Log only the content
+                                let botDiv = document.createElement('div');
+                                botDiv.classList.add('bot');
+                                botDiv.classList.add('chat-format');
+                                botDiv.innerHTML = `<p>${content}</p>`;
+                                chatContainer.appendChild(botDiv);
+                            }
+                        } catch (e) {
+                            console.error('Error parsing JSON:', e);
+                        }
+                    } else {
+                        // End of the message stream
+                        let loaderElement = document.querySelector('.loader');
+                        if (loaderElement) {
+                            chatContainer.removeChild(loaderElement);
+                        }
+                    }
+                }
+            }
+
+            return reader.read().then(processText);
+        }
+
+        return reader.read().then(processText);
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+
+
+// Listen for the enter key to send the message
 userInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
-        sendMessage();
+        sendMessageStream();
     }
 });

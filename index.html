@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="./img/logo.png">
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js" defer></script>
     <title>chat bot</title>
 </head>
 <body>
@@ -49,7 +48,7 @@
             </div>
             <div id="chat-control">
                 <input type="text" id="input" placeholder="Type a message...">
-                <button id="send" onclick="sendMessage()">Send</button>
+                <button id="send" onclick="sendMessageStream()">Send</button>
             </div>
         </div>
         
@@ -59,5 +58,7 @@
         <a href="https://www.flaticon.com/fr/icones-gratuites/engrenages" title="engrenages icônes">Engrenages icônes créées par Freepik - Flaticon</a>
         <a href="https://www.flaticon.com/fr/icones-gratuites/parametres-de-lapplication" title="paramètres de l'application icônes">Paramètres de l'application icônes créées par Subhan Abdul Aziz - Flaticon</a>
     </footer>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
