@@ -421,54 +421,72 @@ function sendMessageStream() {
         if (!response.body) {
             throw new Error("No response body from server");
         }
-
+        console.log(response);
+        console.log(response.body);
         const reader = response.body.getReader();
         const decoder = new TextDecoder('utf-8');
         let buffer = '';
 
-        function processText({ done, value }) {
-            if (done) {
-                return;
-            }
+                
+        chatContainer.removeChild(document.querySelector('.loader'));
+        let p = document.createElement('p');
+        let div = document.createElement('div');
+        div.id = 'chat-response';
+        div.classList.add('bot');
+        div.classList.add(cl);
+        let img = document.createElement('img');
+        img.src = 'img/logo.png';
+        img.classList.add('img');
+        let name = document.createElement('p');
+        name.innerHTML = 'T.W.O.N.T.B. :';
+        let section = document.createElement('section');
+        section.appendChild(img);
+        section.appendChild(name);
+        div.appendChild(section);
+        div.appendChild(p);
+        chatContainer.appendChild(div);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        
 
-            buffer += decoder.decode(value, { stream: true });
+        const readChunk = () => {
+            reader.read().then(({ done, value }) => {
+                if (done) {
+                    console.log('Stream complete');
+                    return;
+                }
 
-            let position;
-            while ((position = buffer.indexOf('\n')) >= 0) {
-                const line = buffer.slice(0, position).trim();
-                buffer = buffer.slice(position + 1);
-                if (line.startsWith('data: ')) {
-                    const data = line.slice(6); // Remove the 'data: ' part
-                    if (data !== '[DONE]') {
+                // Decode the chunk and append to the buffer
+                buffer += decoder.decode(value, { stream: true });
+
+                // Process the buffer line by line
+                const lines = buffer.split('\n');
+                buffer = lines.pop(); // Keep the last line (which might be incomplete) in the buffer
+
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const jsonString = line.slice(6); // Remove 'data: ' prefix
                         try {
-                            const json = JSON.parse(data);
-                            if (json.choices && json.choices[0].delta && json.choices[0].delta.content) {
-                                const content = json.choices[0].delta.content;
-                                // Process the chunk
-                                console.log(content); // Log only the content
-                                let botDiv = document.createElement('div');
-                                botDiv.classList.add('bot');
-                                botDiv.classList.add('chat-format');
-                                botDiv.innerHTML = `<p>${content}</p>`;
-                                chatContainer.appendChild(botDiv);
+                            const jsonObject = JSON.parse(jsonString);
+                            console.log(jsonObject.choices[0].delta.finish_reason); // Process your JSON object here
+                            if (jsonObject.choices[0].delta.content != undefined) {
+                                p.innerHTML = p.innerHTML + jsonObject.choices[0].delta.content;
                             }
                         } catch (e) {
                             console.error('Error parsing JSON:', e);
                         }
-                    } else {
-                        // End of the message stream
-                        let loaderElement = document.querySelector('.loader');
-                        if (loaderElement) {
-                            chatContainer.removeChild(loaderElement);
-                        }
                     }
                 }
-            }
 
-            return reader.read().then(processText);
-        }
+                // Continue reading the next chunk
+                readChunk();
+            }).catch(error => {
+                console.error('Error reading stream:', error);
+            });
+        };
 
-        return reader.read().then(processText);
+        // Start reading the first chunk
+        readChunk();
+
     })
     .catch(error => console.error('Error:', error));
 }
