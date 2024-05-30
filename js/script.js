@@ -25,6 +25,13 @@ if (window.location.href.includes('local') || window.location.href.includes('127
 };
 
 // ========================================================================================================
+// Web Socket
+// const socket = io('http://localhost:8004');
+// socket.emit('connectMessage', () => {
+//     console.log('trying to get the message');
+// });
+
+// ========================================================================================================
 // retrieve the user's profile picture and his discutions
 getPicture()
 getThreads()
@@ -371,9 +378,143 @@ function sendMessage() {
         });
 }
 
-// listen for the enter key to send the message
+function sendMessageStream() {
+    // Check if the user is in a discussion
+    if (document.querySelector('.active') === null) {
+        alert('You must first create a discussion');
+        return;
+    }
+
+    // Show user message
+    let userMessage = userInput.value;
+    userInput.value = '';
+    let div = document.createElement('div');
+    let cl = 'chat-format';
+    let section = document.createElement('section');
+    let img = null;
+    let name = document.createElement('p');
+    let p = document.createElement('p');
+    div.id = 'chat-response';
+    div.classList.add('user');
+    div.classList.add(cl);
+    let profile = localStorage.getItem('picture');
+    let extension = localStorage.getItem('extension');
+
+    // Check the length of the profile to determine which one to display and how
+    if (profile.length < 100) {
+        img = document.createElement('div');
+        img.innerHTML = profile.charAt(0);
+        name.innerHTML = 'You :';
+    } else {
+        img = document.createElement('img');
+        img.src = `data:image/${extension};base64,${profile}`;
+        name.innerHTML = 'You :';
+    }
+
+    img.classList.add('img');
+    p.innerHTML = userMessage;
+    p.classList.add('textual');
+    section.appendChild(img);
+    section.appendChild(name);
+    div.appendChild(section);
+    div.appendChild(p);
+    chatContainer.appendChild(div);
+
+    // Show the loader
+    chatContainer.appendChild(loader());
+
+    // Scroll to the bottom of the chat container
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    let chatId = document.querySelector('.active').id;
+
+    fetch(url + '/api/message/pipeline', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ chatId: chatId, message: userMessage })
+    })
+    .then(response => {
+        if (!response.body) {
+            throw new Error("No response body from server");
+        }
+        console.log(response);
+        console.log(response.body);
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
+
+                
+        chatContainer.removeChild(document.querySelector('.loader'));
+        let p = document.createElement('p');
+        let div = document.createElement('div');
+        div.id = 'chat-response';
+        div.classList.add('bot');
+        div.classList.add(cl);
+        let img = document.createElement('img');
+        img.src = 'img/logo.png';
+        img.classList.add('img');
+        let name = document.createElement('p');
+        name.innerHTML = 'T.W.O.N.T.B. :';
+        let section = document.createElement('section');
+        section.appendChild(img);
+        section.appendChild(name);
+        div.appendChild(section);
+        div.appendChild(p);
+        chatContainer.appendChild(div);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        
+
+        const readChunk = () => {
+            reader.read().then(({ done, value }) => {
+                if (done) {
+                    console.log('Stream complete');
+                    return;
+                }
+
+                // Decode the chunk and append to the buffer
+                buffer += decoder.decode(value, { stream: true });
+
+                // Process the buffer line by line
+                const lines = buffer.split('\n');
+                buffer = lines.pop(); // Keep the last line (which might be incomplete) in the buffer
+
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const jsonString = line.slice(6); // Remove 'data: ' prefix
+                        try {
+                            const jsonObject = JSON.parse(jsonString);
+                            console.log(jsonObject.choices[0].delta.finish_reason); // Process your JSON object here
+                            if (jsonObject.choices[0].delta.content != undefined) {
+                                p.innerHTML = p.innerHTML + jsonObject.choices[0].delta.content;
+                            }
+                        } catch (e) {
+                            console.error('Error parsing JSON:', e);
+                        }
+                    }
+                }
+
+                // Continue reading the next chunk
+                readChunk();
+            }).catch(error => {
+                console.error('Error reading stream:', error);
+            });
+        };
+
+        // Start reading the first chunk
+        readChunk();
+
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+
+
+// Listen for the enter key to send the message
 userInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
-        sendMessage();
+        sendMessageStream();
     }
 });

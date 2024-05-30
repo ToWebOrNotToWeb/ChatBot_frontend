@@ -40,32 +40,6 @@ function logout() {
     window.location.href = 'auth.html';
 }
 
-function convertFileToBase64(inputElement, callback) {
-    // Ensure a file has been selected
-    if (inputElement.files.length === 0) {
-        console.error("No file selected.");
-        return;
-    }
-
-    var file = inputElement.files[0];
-    var reader = new FileReader();
-
-    // Setup onload event for reader
-    reader.onload = function() {
-        // Get the Base64 string
-        var base64String = reader.result;
-        
-        // Remove the data URL prefix (if necessary) and return the raw base64 string
-        var base64 = base64String.split(',')[1];
-        
-        // Call the callback function with the Base64 string
-        callback(base64);
-    };
-
-    // Read the file as a Data URL (Base64)
-    reader.readAsDataURL(file);
-}
-
 
 // ========================================================================================================
 // Get the user's profile informations
@@ -135,16 +109,7 @@ function updateProfile() {
 // Update user's profile picture
 function updatePicture() {
     let picture = document.getElementById('picture');
-    if (picture.files && picture.files[0]) {
-        // Access the first file in the input file list
-        let file = picture.files[0];
 
-        if (file.size > 7692) { // 7.7 KB = 7692 bytes
-            alert('The file size should be 7.7KB or less.');
-            // Clear the input if the file is too large
-            picture.value = '';
-        }
-    }
     // check containt only one . in the file name
     if (picture.value.split('.').length !== 2) {
         alert('Invalid  file name');
@@ -158,9 +123,8 @@ function updatePicture() {
         return;
     }
     let extention = picture.value.split('.').pop();
-    convertFileToBase64(picture, (base64) => {
         let data = {
-            picture: base64,
+            picture: picture,
             extention: extention
         }
         fetch(url + '/user/picture', {
@@ -182,8 +146,6 @@ function updatePicture() {
                 alert('Picture not updated');
             }
         })
-    })
-
 }
 
 // ========================================================================================================
