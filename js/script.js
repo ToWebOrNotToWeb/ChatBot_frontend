@@ -49,6 +49,9 @@ function getPicture() {
     })
         .then(response => response.json())
         .then(data => {
+            if (data.status === 401) {
+                window.location.href = 'auth.html';
+            }
             //console.log(data.result);
             // Store the picture and its extention in the local storage
             localStorage.setItem('picture', data.result);
@@ -113,6 +116,9 @@ function getThreads() {
         return response.json();
     })
     .then(data => {
+        if (data.status === 401) {
+            window.location.href = 'auth.html';
+        }
         //console.log(data);
         //console.log(data.chats);
         let oldLi = document.querySelectorAll('.discution');
@@ -197,6 +203,9 @@ function createThread() {
         body: JSON.stringify({ chatName: newName })
     }).then(response => response.json())
         .then(data => {
+            if (data.status === 401) {
+                window.location.href = 'auth.html';
+            }
             //console.log(data);
             document.getElementById('threadName').classList.remove('error');
 
@@ -219,6 +228,9 @@ function deleteThread(Id) {
     })
         .then(response => response.json())
         .then(data => {
+            if (data.status === 401) {
+                window.location.href = 'auth.html';
+            }
             //console.log(data);
 
             // remove all the messages from the chat container
@@ -243,6 +255,9 @@ function getMessages(Id) {
     })
         .then(response => response.json())
         .then(messages => {
+            if (messages.status === 401) {
+                window.location.href = 'auth.html';
+            }
             chatContainer.innerHTML = '';
             messages.messages.content.forEach(element => {
                 // we ignore the system messages
@@ -350,6 +365,9 @@ function sendMessage() {
         .then(response => response.json())
         .then(data => {
             console.log(data)
+            if (data.status === 401) {
+                window.location.href = 'auth.html';
+            }
             // refresh the messages to display bot response
             if (data.status != 500) {
             getMessages(data.id);
