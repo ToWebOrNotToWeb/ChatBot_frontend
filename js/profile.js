@@ -53,7 +53,12 @@ function getProfile(){
             'Authorization': 'Bearer ' + token
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (response.status === 401 || response.status === 403) {
+            window.location.href = 'auth.html';
+        }
+        response.json()
+    })
     .then(data => {
         //console.log(data);
         // clear eveything in the profile
