@@ -57,7 +57,7 @@ function getProfile(){
         if (response.status === 401 || response.status === 403) {
             window.location.href = 'auth.html';
         }
-        response.json()
+        return response.json();
     })
     .then(data => {
         //console.log(data);
