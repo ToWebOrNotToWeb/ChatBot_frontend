@@ -54,6 +54,9 @@ function getPicture() {
             response.json()
         })
         .then(data => {
+            if (data.status === 401) {
+                window.location.href = 'auth.html';
+            }
             //console.log(data.result);
             // Store the picture and its extention in the local storage
             localStorage.setItem('picture', data.result);
@@ -206,6 +209,9 @@ function createThread() {
         body: JSON.stringify({ chatName: newName })
     }).then(response => response.json())
         .then(data => {
+            if (data.status === 401) {
+                window.location.href = 'auth.html';
+            }
             //console.log(data);
             document.getElementById('threadName').classList.remove('error');
 
@@ -228,6 +234,9 @@ function deleteThread(Id) {
     })
         .then(response => response.json())
         .then(data => {
+            if (data.status === 401) {
+                window.location.href = 'auth.html';
+            }
             //console.log(data);
 
             // remove all the messages from the chat container
@@ -257,9 +266,6 @@ function getMessages(Id) {
             response.json()
         })
         .then(messages => {
-            if (data.status === 401 || data.status === 403) {
-                window.location.href = 'auth.html';
-            }
             chatContainer.innerHTML = '';
             messages.messages.content.forEach(element => {
                 // we ignore the system messages
@@ -370,6 +376,9 @@ function sendMessage() {
                 window.location.href = 'auth.html';
             }
             console.log(data)
+            if (data.status === 401) {
+                window.location.href = 'auth.html';
+            }
             // refresh the messages to display bot response
             if (data.status != 500) {
             getMessages(data.id);
