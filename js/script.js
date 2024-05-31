@@ -51,12 +51,9 @@ function getPicture() {
             if (response.status === 401 || response.status === 403) {
                 window.location.href = 'auth.html';
             }
-            response.json()
+            return response.json();
         })
         .then(data => {
-            if (data.status === 401) {
-                window.location.href = 'auth.html';
-            }
             //console.log(data.result);
             // Store the picture and its extention in the local storage
             localStorage.setItem('picture', data.result);
@@ -263,7 +260,7 @@ function getMessages(Id) {
             if (response.status === 401 || response.status === 403) {
                 window.location.href = 'auth.html';
             }
-            response.json()
+            return response.json();
         })
         .then(messages => {
             chatContainer.innerHTML = '';
@@ -372,13 +369,6 @@ function sendMessage() {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 401 || data.status === 403) {
-                window.location.href = 'auth.html';
-            }
-            console.log(data)
-            if (data.status === 401) {
-                window.location.href = 'auth.html';
-            }
             // refresh the messages to display bot response
             if (data.status != 500) {
             getMessages(data.id);
