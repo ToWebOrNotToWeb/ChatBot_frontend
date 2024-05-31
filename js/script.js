@@ -47,7 +47,12 @@ function getPicture() {
             'Authorization': 'Bearer ' + token
         }
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 401 || response.status === 403) {
+                window.location.href = 'auth.html';
+            }
+            response.json()
+        })
         .then(data => {
             if (data.status === 401) {
                 window.location.href = 'auth.html';
@@ -110,16 +115,17 @@ function getThreads() {
         },
     })
     .then(response => {
+        if (response.status === 401 || response.status === 403) {
+            window.location.href = 'auth.html';
+        }
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         return response.json();
     })
     .then(data => {
-        if (data.status === 401) {
-            window.location.href = 'auth.html';
-        }
-        //console.log(data);
+        
+        
         //console.log(data.chats);
         let oldLi = document.querySelectorAll('.discution');
         let newDiscution = document.getElementById('newDiscution');
@@ -253,11 +259,13 @@ function getMessages(Id) {
         },
         body: JSON.stringify({ chatId: Id })
     })
-        .then(response => response.json())
-        .then(messages => {
-            if (messages.status === 401) {
+        .then(response => {
+            if (response.status === 401 || response.status === 403) {
                 window.location.href = 'auth.html';
             }
+            response.json()
+        })
+        .then(messages => {
             chatContainer.innerHTML = '';
             messages.messages.content.forEach(element => {
                 // we ignore the system messages
@@ -364,6 +372,9 @@ function sendMessage() {
     })
         .then(response => response.json())
         .then(data => {
+            if (data.status === 401 || data.status === 403) {
+                window.location.href = 'auth.html';
+            }
             console.log(data)
             if (data.status === 401) {
                 window.location.href = 'auth.html';
