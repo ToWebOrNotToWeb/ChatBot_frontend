@@ -34,7 +34,7 @@ if (window.location.href.includes('local') || window.location.href.includes('127
 // ========================================================================================================
 // retrieve the user's profile picture and his discutions
 getPicture()
-getThreads()
+getThreads(false)
 
 // ========================================================================================================
 // uncategorized functions
@@ -49,6 +49,7 @@ function getPicture() {
     })
         .then(response => {
             if (response.status === 401 || response.status === 403) {
+                alert('Session expired, please login again');
                 window.location.href = 'auth.html';
             }
             return response.json();
@@ -101,7 +102,7 @@ function formatResponse(text) {
 
 // ========================================================================================================
 // Get user's thread
-function getThreads() {
+function getThreads(safeGuard) {
     //console.log('getting threads');
 
     fetch(url+'/api/discution/get', {
@@ -113,6 +114,7 @@ function getThreads() {
     })
     .then(response => {
         if (response.status === 401 || response.status === 403) {
+            alert('Session expired, please login again');
             window.location.href = 'auth.html';
         }
         if (!response.ok) {
@@ -142,7 +144,7 @@ function getThreads() {
 
             // Add event listener to the delete button of each discution
             btn.addEventListener('click', function() {
-                console.log(li.id);
+            
                 deleteThread(li.id);
             });
 
@@ -156,10 +158,14 @@ function getThreads() {
             allDiscution.insertBefore(li, newDiscution);
         })
 
-        // get the active discution and display its messages
-        let discution = document.querySelectorAll('.discution');
-        discution[discution.length - 1].classList.add('active');
-        getMessages(data.chats[data.chats.length - 1]._id);
+        let discussions = document.querySelectorAll('.discution');
+            discussions[discussions.length - 1].classList.add('active');
+
+        
+        if (!safeGuard) {
+            // Get the active discussion and display its messages
+            getMessages(data.chats[data.chats.length - 1]._id);
+        } 
 
     })
     .catch(error => {
@@ -184,14 +190,13 @@ function undo() {
     document.getElementById('threadName').classList.remove('error');
 }
 
-function createThread() {
+function createThread(safeGuard) {
     let newName = document.getElementById('threadName');
     newName = newName.value;
 
     // verify the input isn't empty
     if (newName === '') {
-        document.getElementById('threadName').classList.add('error');
-        return;
+        newName = 'New discution';
     }
 
     // close the popup window
@@ -209,11 +214,18 @@ function createThread() {
             if (data.status === 401) {
                 window.location.href = 'auth.html';
             }
-            //console.log(data);
-            document.getElementById('threadName').classList.remove('error');
 
+            document.getElementById('threadName').classList.remove('error');
+            
+            if (safeGuard) {
+                getThreads(true);
+                return data.chatId
+            } else {
+                getThreads(false)
+            }
             // refresh the discutions
-            getThreads();
+            
+
         });
 
 }
@@ -241,7 +253,7 @@ function deleteThread(Id) {
             chatContainer.innerHTML = '';
 
             // refresh the discutions
-            getThreads();
+            getThreads(false);
         });
 }
 
@@ -258,6 +270,7 @@ function getMessages(Id) {
     })
         .then(response => {
             if (response.status === 401 || response.status === 403) {
+                alert('Session expired, please login again');
                 window.location.href = 'auth.html';
             }
             return response.json();
@@ -313,8 +326,9 @@ function getMessages(Id) {
 function sendMessage() {
     // check if the user is in a discution
     if (document.querySelector('.active') === null) {
-        alert('You must first create a discution');
-        return;
+        // alert('You must first create a discution');
+        // return;
+        createThread(true)
     }
 
     // show user message
@@ -382,8 +396,9 @@ function sendMessage() {
 function sendMessageStream() {
     // Check if the user is in a discussion
     if (document.querySelector('.active') === null) {
-        alert('You must first create a discussion');
-        return;
+        // alert('You must first create a discution');
+        // return;
+        createThread(true)
     }
 
     // Show user message
@@ -426,7 +441,16 @@ function sendMessageStream() {
 
     // Scroll to the bottom of the chat container
     chatContainer.scrollTop = chatContainer.scrollHeight;
-    let chatId = document.querySelector('.active').id;
+    
+    
+    let chatId;
+    try {
+        chatId = document.querySelector('.active').id;
+    } catch (e) {
+        setTimeout(() => {
+            chatId = document.querySelector('.active').id;
+        }, 2000);
+    }
 
     fetch(url + '/api/message/pipeline', {
         method: 'POST',
@@ -471,9 +495,6 @@ function sendMessageStream() {
         const readChunk = () => {
             reader.read().then(({ done, value }) => {
                 if (done) {
-                    console.log('Stream complete');
-                    console.log(fullResponse);
-                    console.log(userMessage);
                     data = [userMessage, fullResponse]
                     fetch(url+ '/api/message/fix', {
                         method: 'POST',
@@ -482,7 +503,9 @@ function sendMessageStream() {
                             'Authorization': 'Bearer ' + token
                         },
                         body: JSON.stringify({ chatId: chatId, message: data })
-                    });
+                    }).then(response => {
+                        getMessages(chatId);
+                    })
                     return;
                 }
 
@@ -498,7 +521,6 @@ function sendMessageStream() {
                         const jsonString = line.slice(6); // Remove 'data: ' prefix
                         try {
                             const jsonObject = JSON.parse(jsonString);
-                            console.log(jsonObject.choices[0].delta.finish_reason); // Process your JSON object here
                             if (jsonObject.choices[0].delta.content != undefined) {
                                 p.innerHTML += jsonObject.choices[0].delta.content;
                                 fullResponse += jsonObject.choices[0].delta.content;
