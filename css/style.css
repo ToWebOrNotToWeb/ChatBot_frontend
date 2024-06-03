@@ -256,6 +256,7 @@ aside img:hover + .menu {
     overflow-y: scroll;
     height: 100%;
     text-align:justify;
+    padding-bottom: 50px;
 }
 
 #chat-control {

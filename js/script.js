@@ -502,7 +502,7 @@ function sendMessageStream() {
                             if (jsonObject.choices[0].delta.content != undefined) {
                                 p.innerHTML += jsonObject.choices[0].delta.content;
                                 fullResponse += jsonObject.choices[0].delta.content;
-                                
+                                chatContainer.scrollTop = chatContainer.scrollHeight;
                             }
                         } catch (e) {
                             console.error('Error parsing JSON:', e);
