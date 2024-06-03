@@ -445,6 +445,7 @@ function sendMessageStream() {
         const reader = response.body.getReader();
         const decoder = new TextDecoder('utf-8');
         let buffer = '';
+        let fullResponse = '';
 
                 
         chatContainer.removeChild(document.querySelector('.loader'));
@@ -471,6 +472,17 @@ function sendMessageStream() {
             reader.read().then(({ done, value }) => {
                 if (done) {
                     console.log('Stream complete');
+                    console.log(fullResponse);
+                    console.log(userMessage);
+                    data = [userMessage, fullResponse]
+                    fetch(url+ '/api/message/fix', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: JSON.stringify({ chatId: chatId, message: data })
+                    });
                     return;
                 }
 
@@ -488,7 +500,9 @@ function sendMessageStream() {
                             const jsonObject = JSON.parse(jsonString);
                             console.log(jsonObject.choices[0].delta.finish_reason); // Process your JSON object here
                             if (jsonObject.choices[0].delta.content != undefined) {
-                                p.innerHTML = p.innerHTML + jsonObject.choices[0].delta.content;
+                                p.innerHTML += jsonObject.choices[0].delta.content;
+                                fullResponse += jsonObject.choices[0].delta.content;
+                                
                             }
                         } catch (e) {
                             console.error('Error parsing JSON:', e);
