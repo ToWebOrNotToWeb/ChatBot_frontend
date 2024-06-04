@@ -136,16 +136,23 @@ function getThreads(safeGuard) {
         data.chats.forEach(element => {
             let li = document.createElement('li');
             let btn = document.createElement('button');
+            let input = document.createElement('input');
             btn.innerHTML = 'Delete';
-            li.innerHTML = element.chatName;
+            input.type = 'text';
+            input.value = element.chatName;
             li.id = element._id;
             li.classList.add('discution');
+            li.appendChild(input);
             li.appendChild(btn);
 
             // Add event listener to the delete button of each discution
             btn.addEventListener('click', function() {
-            
                 deleteThread(li.id);
+            });
+
+            // Add event listener to the input of each discution to update the name of the discution
+            input.addEventListener('change', function() {
+                updateThread(li.id);
             });
 
             // Add event listener to each discution to move the active class to the clicked discution
@@ -255,6 +262,33 @@ function deleteThread(Id) {
             // refresh the discutions
             getThreads(false);
         });
+}
+
+// ========================================================================================================
+// Update thread
+function updateThread(Id) {
+    let li = document.getElementById(Id);
+    let newName = li.querySelector('input').value;
+    console.log(newName);
+    fetch(url+'/api/discution/update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ chatId: Id, chatName: newName })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 401) {
+                window.location.href = 'auth.html';
+            }
+            console.log(data);
+
+            // refresh the discutions
+            getThreads(false);
+        });
+
 }
 
 // ========================================================================================================
@@ -545,7 +579,6 @@ function sendMessageStream() {
     })
     .catch(error => console.error('Error:', error));
 }
-
 
 
 
