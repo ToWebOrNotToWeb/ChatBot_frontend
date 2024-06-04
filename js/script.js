@@ -84,15 +84,44 @@ function profile() {
     window.location.href = 'profile.html';
 }
 
+function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, function (match) {
+        const escapeMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        };
+        return escapeMap[match];
+    });
+}
+
+function formatBoldAndUppercase(text) {
+    return text.replace(/\*\*(.*?)\*\*/g, function(match, p1) {
+        return `<u>${p1.toUpperCase()}</u>`;
+    });
+}
+
 function formatResponse(text) {
-    // To format the response from the bot
     const lines = text.split('\n');
     let formattedText = '';
 
     lines.forEach(line => {
-        if (line.match(/^\d+\./)) { // Checks if the line starts with a number followed by a dot
+        // Trim the line to remove any leading/trailing whitespace
+        line = line.trim();
+        
+        // Escape any HTML characters
+        line = escapeHTML(line);
+
+        // Apply bold and uppercase formatting
+        line = formatBoldAndUppercase(line);
+
+        // Check if the line starts with a number followed by a dot
+        if (line.match(/^\d+\./)) {
             formattedText += `<li>${line}</li>`;
-        } else {
+        } else if (line.length > 0) {
+            // Only add non-empty lines
             formattedText += `<p>${line}</p>`;
         }
     });
@@ -311,6 +340,7 @@ function getMessages(Id) {
         })
         .then(messages => {
             chatContainer.innerHTML = '';
+            console.log(messages)
             messages.messages.content.forEach(element => {
                 // we ignore the system messages
                 if (element.role != 'system') {
@@ -433,6 +463,10 @@ function sendMessageStream() {
         // alert('You must first create a discution');
         // return;
         createThread(true)
+    }
+
+    if (userInput.value === '') {
+        return;
     }
 
     // Show user message
