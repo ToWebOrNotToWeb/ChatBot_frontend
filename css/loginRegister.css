@@ -1,0 +1,205 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #FDF7F7;
+    --text: #0D0C5A;
+    --primary: #3EE0E0;
+    --secondary: #EEBCBC;
+    --accent: #E55D5D;
+}
+
+body {
+    background-color: var(--background);
+}
+
+main {
+    height: 80vh;
+    width: 80vw;
+    margin: 90px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+img {
+    width: 50%;
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 5px 0% 0% 5px;;
+    border-right: none;
+}
+
+section {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 0% 5px 5px 0%;
+    border-left: none;
+    color: var(--text);
+    font-size: 1.2rem;
+}
+
+section h1 {
+    background: -webkit-linear-gradient(0deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+section form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 60px;
+}
+
+
+section form .fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+section form .fields label {
+    position: relative;
+    top: 40%;
+    font-size: 1.8rem;
+    transition: ease-in-out 0.3s;
+}
+
+section form .fields input {
+    width: 300px;
+    height: 30px;
+    border: none;
+    border-bottom: 2px solid var(--accent);
+    padding: 5px;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+section form .fields input:focus {
+    outline: none;
+}
+
+section .validation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+}
+
+section .validation button {
+    width: 100px;
+    height: 30px;
+    border: 1px solid var(--primary);
+    border-radius: 15px;
+    background-color: transparent;
+    color: var(--text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+section .validation button:hover {
+    background-color: var(--primary);
+    color: var(--background);
+    scale: 1.1;
+}
+
+section .validation p a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+
+@media screen and (width: 768px) {
+    main {
+        justify-content: center;
+        width: 90vw;
+        background-image: url(../img/illuAuth.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    img {
+        display: none;
+        border: none;
+    }
+
+    section {
+        width: calc(auto + 20px);
+        height: 100%;
+        border: none;
+        background: var(--background);
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    }
+
+    section h1 {
+        font-size: 1.5rem;
+    }
+
+    section form .fields label {
+        font-size: 1.5rem;
+    }
+
+    section form .fields input {
+        width: 200px;
+        height: 20px;
+        font-size: 1rem;
+    }
+
+    section .validation p a {
+        font-size: 1rem;
+    }
+    
+}
+
+@media screen and (width: 425px) {
+    main {
+        justify-content: center;
+        width: 100%;
+        border: none;
+    }
+
+    img {
+        display: none;
+        border: none;
+    }
+
+    section {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    section h1 {
+        font-size: 1.5rem;
+    }
+
+    section form .fields label {
+        font-size: 1.5rem;
+    }
+
+    section form .fields input {
+        width: 200px;
+        height: 20px;
+        font-size: 1rem;
+    }
+
+    section .validation p a {
+        font-size: 1rem;
+    }
+}

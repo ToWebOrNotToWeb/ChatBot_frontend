@@ -81,7 +81,7 @@ function login(event) {
         body: JSON.stringify(data)
     }).then(res => res.json())
     .then(data => {
-        //console.log(data);
+        console.log(data);
         //localStorage.setItem('two', data);
         // console.log(data.token);
         // console.log(data.error);
