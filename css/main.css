@@ -1,0 +1,437 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --backgroundSecondary: FDF7F7;
+    --background: #FDF7F7;
+    --text: #0D0C5A;
+    --primary: #3EE0E0;
+    --secondary: #EEBCBC;
+    --accent: #E55D5D;
+}
+
+body {
+    background-color: var(--background);
+    display: flex;
+    flex-direction: row;
+    color: var(--text);
+}
+
+#burger {
+    display: none;
+}
+
+#close {
+    display: none;
+}
+
+aside {
+    position: fixed;
+    width: 15%;
+    height: 100vh;
+    background-color: var(--backgroundSecondary);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    display: grid;
+    grid-template-rows: 110px 90px 4fr 1fr;
+    justify-content: center;
+}
+
+aside h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: -webkit-linear-gradient(360deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+aside #createChat {
+    border: 1px solid var(--primary);
+    border-radius: 15px;
+    padding: 10px;
+    margin: 20px 50px;
+    color: var(--text);
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    gap: 10px;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+aside #createChat path,svg {
+    transition: ease-in-out 0.3s;
+}
+
+aside #createChat:hover {
+    background-color: var(--primary);
+    color: var(--background);
+    scale: 1.1;
+}
+
+aside #createChat:hover path {
+    stroke: var(--background);
+}
+
+aside nav div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    right: 25%;
+}
+
+aside nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+aside nav ul li {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+aside section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+aside section button {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+}
+
+aside section button a {
+    color: var(--text);
+    text-decoration: none;
+    transition: ease-in-out 0.3s;
+}
+
+aside section button:hover a {
+    color: var(--primary);
+}
+
+main {
+    width: 100%;
+    min-height: auto;
+    padding-left: 15%;
+}
+
+main #starter{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-40%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main #starter h3 {
+    font-size: 2rem;
+    font-weight: normal;
+    margin-bottom: 20px;
+    color: var(--text);
+}
+
+main #starter section {
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+    width: fit-content;
+    gap: 20px;
+}
+
+main #starter section div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    margin: auto;
+    height: 200px;
+    width: 250px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+}
+
+
+main #starter section div:hover {
+    transform: scale(1.1);
+}
+
+main #starter section div p {
+    font-size: 1.1rem;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+main #opOne {
+    background: linear-gradient(0.4turn, var(--primary), var(--accent));
+}
+
+main #opTwo {
+    background: linear-gradient(0.6turn, var(--primary), var(--accent));
+}
+
+main #opThree {
+    background: linear-gradient(0.2turn, var(--primary), var(--accent));
+}
+
+main #opFour {
+    background: linear-gradient(0.8turn, var(--primary), var(--accent));
+}
+
+main #windows {
+
+}
+
+main #inputBar {
+    position: fixed;
+    bottom: 90px;
+    left: 65%;
+    transform: translateX(-65%);
+    width: 60%;
+    background-color: var(--backgroundSecondary);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: auto;
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+}
+
+main #inputBar input {
+    width: 80%;
+    border: none;
+    background-color: var(--backgroundSecondary);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+main #inputBar input:focus {
+    outline: none;
+}
+
+main #inputBar button {
+    border: none;
+    font-size: 1.3rem;
+    margin-right: 20px;
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+main #inputBar button:hover {
+    color: var(--primary);
+}
+
+@media screen and (width: 1024px) {
+
+    aside {
+        width: 20%;
+    }
+
+    aside h1 {
+        font-size: 2rem;
+    }
+
+    aside #createChat {
+        font-size: 1.2rem;
+    }
+
+    aside #createChat svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    aside nav div {
+        right: 20%;
+    }
+
+    aside nav ul li {
+        font-size: 1.2rem;
+    }
+
+    aside section button {
+        font-size: 1.1rem;
+    }
+
+    aside section button svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    main #starter h3 {
+        font-size: 1.4rem;
+    }
+
+    main #starter section div {
+        height: 150px;
+        width: 200px;
+    }
+
+    main #starter section div p {
+        font-size: 1rem;
+    }
+
+    main #inputBar {
+        bottom: 70px;
+    }
+
+    main #inputBar input {
+        font-size: 1.1rem;
+    }
+
+    main #inputBar button {
+        font-size: 1.1rem;
+    }
+
+}
+
+
+@media screen and (width: 768px) {
+
+    #burger {
+        display: block;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    #close {
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    aside {
+        display: none;
+        position: absolute;
+        z-index: 2;
+        background-color: var(--background);
+        width: 40%;
+    }
+
+    main {
+        width: 100%;
+    }
+
+    main #starter {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    main #starter h3 {
+        font-size: 1.8rem;
+    }
+
+    main #inputBar {
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+
+}
+
+@media screen and (width: 425px) {
+
+    #burger{
+        display: block;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    #close {
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+    
+    aside {
+        display: none;
+        position: absolute;
+        z-index: 2;
+        background-color: var(--background);
+        width: 60%;
+    }
+
+    main {
+        width: 100%;
+    }
+
+    main #starter {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    main #starter h3 {
+        font-size: 1.6rem;
+    }
+
+    main #starter section {
+        display: none;
+    }
+
+    main #inputBar {
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+    }
+
+    main #inputBar input {
+        font-size: 0.9rem;
+    }
+
+    main #inputBar button {
+        font-size: 0.9rem;
+    }
+}
