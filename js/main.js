@@ -153,6 +153,8 @@ function displayChats(chats, exeption = false) {
         let input = document.createElement('input');
         let span = document.createElement('span');
         let binSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 20 20"><path fill="#000C5A" d="M11.299 7.75a1.5 1.5 0 0 0-2.598 0l-.452.782a.5.5 0 1 0 .866.5l.452-.782a.5.5 0 0 1 .866 0l.451.782a.5.5 0 0 0 .867-.5zm.866 3.5l-.108-.186a.5.5 0 0 1 .867-.5l.107.186A1.5 1.5 0 0 1 11.732 13H11a.5.5 0 0 1 0-1h.732a.5.5 0 0 0 .433-.75M9 12a.5.5 0 0 1 0 1h-.732a1.5 1.5 0 0 1-1.3-2.25l.108-.186a.5.5 0 0 1 .866.5l-.107.186a.5.5 0 0 0 .433.75zm6.914-9.414A2 2 0 0 1 16.5 4v.56l-1.33 11.67a2 2 0 0 1-2 1.77H6.85a2 2 0 0 1-2-1.77L3.5 4.56V4a2 2 0 0 1 2-2h9a2 2 0 0 1 1.414.586M14.5 3h-9a1 1 0 0 0-1 1h11a1 1 0 0 0-1-1m-.67 13.747a1 1 0 0 0 .33-.637L15.44 5H4.56l1.28 11.11a1 1 0 0 0 1 .89h6.32a1 1 0 0 0 .67-.253"/></svg>`; 
+        let span2 = document.createElement('span');
+        let writeSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 48 48"><g fill="none" stroke="#000C5A" stroke-linejoin="round" stroke-width="4"><path d="M5.325 43.5h8.485l31.113-31.113l-8.486-8.485L5.325 35.015z"/><path stroke-linecap="round" d="m27.952 12.387l8.485 8.485"/></g></svg>`;
         input.value = chat.chatName;
 
         li.setAttribute('data-chat-id', chat._id);
@@ -162,17 +164,33 @@ function displayChats(chats, exeption = false) {
         if (i === lenght && exeption) {
             li.classList.add('active');
         }
-
+        console.log('thing')
+        console.log(input)
         span.setAttribute('onclick', `deleteChat('${chat._id}')`);
+        span2.setAttribute('onclick', `unlockInput('${chat._id}')`);
+        input.setAttribute('disabled', true);
         input.setAttribute('onblur', `updateChat('${chat._id}')`);
         
 
         span.innerHTML = binSvg;
+        span2.innerHTML = writeSvg;
         li.appendChild(input);
+        li.append(span2)
         li.append(span);
         chatsList.appendChild(li);
     });
     manageActiveChat();
+};
+
+function unlockInput(chatId) {
+    console.log('unlock');
+    let input = document.querySelector(`li[data-chat-id="${chatId}"] input`);
+    console.log(input)
+    input.removeAttribute('disabled');
+    input.focus();
+    input.addEventListener('blur', () => {
+        input.setAttribute('disabled', true);
+    });
 };
 
 // ========================================================================================================
