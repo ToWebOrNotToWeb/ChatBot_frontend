@@ -336,13 +336,17 @@ main #inputBar button:hover {
         font-size: 1.2rem;
     }
 
+    aside nav ul li input {
+        width: 80%;
+    }
+
     aside section button {
         font-size: 1.1rem;
     }
 
     aside section button svg {
-        width: 28px;
-        height: 28px;
+        width: 20px;
+        height: 20px;
     }
 
     main #starter h3 {
@@ -356,6 +360,10 @@ main #inputBar button:hover {
 
     main #starter section div p {
         font-size: 1rem;
+    }
+
+    main #windows {
+        padding: 50px;
     }
 
     main #inputBar {
@@ -417,6 +425,13 @@ main #inputBar button:hover {
         font-size: 1.8rem;
     }
 
+    main #windows {
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -40%);
+        width: 80%;
+    }
+
     main #inputBar {
         bottom: 50px;
         left: 50%;
@@ -472,6 +487,13 @@ main #inputBar button:hover {
 
     main #starter section {
         display: none;
+    }
+
+    main #windows {
+        top: 40%;
+        left: 47%;
+        transform: translate(-50%, -40%);
+        width: 80%;
     }
 
     main #inputBar {
