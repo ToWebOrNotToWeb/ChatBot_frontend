@@ -59,6 +59,7 @@ function login() {
         if (response.status === 200) { //everything is good
             response.json().then(data => {
                 localStorage.setItem('token-TWONTW', data.token);
+                //console.log('Token:', data.token);
                 window.location.href = 'index.html';
             });
         } else if (response.status === 401) { //wrong password or email
@@ -66,7 +67,7 @@ function login() {
                 alert(data.error);
             });
         } else { //unexpected error
-            console.error('Error:', response.status);
+            //console.error('Error:', response.status);
             alert('An error occured');
         };
 

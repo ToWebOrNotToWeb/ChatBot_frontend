@@ -4,61 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="./img/logo.png">
-    <link rel="stylesheet" href="css/style.css">
-    <title>chat bot</title>
+    <script src="js/main.js" defer></script>
+    <link rel="stylesheet" href="css/main.css">
+    <title>index</title>
 </head>
 <body>
-    <header>
-        <h1>ToWebOrNotToWeb</h1>
-    </header>
     <aside>
-        <section>
-            <ul id="allDiscution">
-                <p id="newDiscution" onclick="showPrompt()">New discution +</p>
-            </ul>
+        <h1>To Web or Not To Web</h1>
+        <button id="createChat" onclick="newChat()">
+            <p>New Chat</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="none" stroke="#000C5A" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h3m3 0h-3m0 0V9m0 3v3m0 7c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.5-.838A9.96 9.96 0 0 0 12 22"/></svg>
+        </button>
+        <nav>
             <div>
-                <img src="img/options.png" alt="settings">
-                <section class="menu">
-                        <div class="menu-sub" onclick="profile()">
-                            <img src="./img/setting.png" alt="settings">
-                            <p>Settings</p>
-                        </div>
-                        <hr>
-                        <div class="menu-sub" onclick="logout()">
-                            <img src="./img/logout.png" alt="logout">
-                            <p>LogOut</p>
-                        </div>
-                </section>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#000C5A" d="M9 4v1.38c-.83-.33-1.72-.5-2.61-.5c-1.79 0-3.58.68-4.95 2.05l3.33 3.33h1.11v1.11c.86.86 1.98 1.31 3.11 1.36V15H6v3c0 1.1.9 2 2 2h10c1.66 0 3-1.34 3-3V4zm-1.11 6.41V8.26H5.61L4.57 7.22a5.1 5.1 0 0 1 1.82-.34c1.34 0 2.59.52 3.54 1.46l1.41 1.41l-.2.2a2.7 2.7 0 0 1-1.92.8c-.47 0-.93-.12-1.33-.34M19 17c0 .55-.45 1-1 1s-1-.45-1-1v-2h-6v-2.59c.57-.23 1.1-.57 1.56-1.03l.2-.2L15.59 14H17v-1.41l-6-5.97V6h8z"/></svg>
+                <h2>History: </h2>
             </div>
+            <ul id="chatsList">
+                
+            </ul>
+        </nav>
+        <section>
+            <button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path fill="#000C5A" d="M512.5 390.6c-29.9 0-57.9 11.6-79.1 32.8c-21.1 21.2-32.8 49.2-32.8 79.1s11.7 57.9 32.8 79.1c21.2 21.1 49.2 32.8 79.1 32.8s57.9-11.7 79.1-32.8c21.1-21.2 32.8-49.2 32.8-79.1s-11.7-57.9-32.8-79.1a110.96 110.96 0 0 0-79.1-32.8m412.3 235.5l-65.4-55.9c3.1-19 4.7-38.4 4.7-57.7s-1.6-38.8-4.7-57.7l65.4-55.9a32.03 32.03 0 0 0 9.3-35.2l-.9-2.6a442.5 442.5 0 0 0-79.6-137.7l-1.8-2.1a32.12 32.12 0 0 0-35.1-9.5l-81.2 28.9c-30-24.6-63.4-44-99.6-57.5l-15.7-84.9a32.05 32.05 0 0 0-25.8-25.7l-2.7-.5c-52-9.4-106.8-9.4-158.8 0l-2.7.5a32.05 32.05 0 0 0-25.8 25.7l-15.8 85.3a353.4 353.4 0 0 0-98.9 57.3l-81.8-29.1a32 32 0 0 0-35.1 9.5l-1.8 2.1a445.9 445.9 0 0 0-79.6 137.7l-.9 2.6c-4.5 12.5-.8 26.5 9.3 35.2l66.2 56.5c-3.1 18.8-4.6 38-4.6 57c0 19.2 1.5 38.4 4.6 57l-66 56.5a32.03 32.03 0 0 0-9.3 35.2l.9 2.6c18.1 50.3 44.8 96.8 79.6 137.7l1.8 2.1a32.12 32.12 0 0 0 35.1 9.5l81.8-29.1c29.8 24.5 63 43.9 98.9 57.3l15.8 85.3a32.05 32.05 0 0 0 25.8 25.7l2.7.5a448.3 448.3 0 0 0 158.8 0l2.7-.5a32.05 32.05 0 0 0 25.8-25.7l15.7-84.9c36.2-13.6 69.6-32.9 99.6-57.5l81.2 28.9a32 32 0 0 0 35.1-9.5l1.8-2.1c34.8-41.1 61.5-87.4 79.6-137.7l.9-2.6c4.3-12.4.6-26.3-9.5-35m-412.3 52.2c-97.1 0-175.8-78.7-175.8-175.8s78.7-175.8 175.8-175.8s175.8 78.7 175.8 175.8s-78.7 175.8-175.8 175.8"/></svg>
+                <a href="settings.html">Settings</a>
+            </button>
+            <button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#000C5A" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z"/></svg>
+                <a href="login.html">Log out</a>
+            </button>
+            <button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="#000C5A" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 2.05S16 6 16 12m-5 9.95S8 18 8 12s3-9.95 3-9.95M2.63 15.5H12m-9.37-7h18.74"/><path d="M21.879 17.917c.494.304.463 1.043-.045 1.101l-2.567.291l-1.151 2.312c-.228.459-.933.234-1.05-.334l-1.255-6.116c-.099-.48.333-.782.75-.525z" clip-rule="evenodd"/></g></svg>
+                <a href="https://towebornottoweb.com/">More about us</a>
+            </button>
         </section>
     </aside>
-    <div class="prompt">
-        <div>
-            <label for="promptInput">Enter the name of the thread :</label>
-            <input id="threadName" type="text" name="promptInput" maxlength="20">
-            <button onclick="createThread()">Create</button>
-            <button onclick="undo()">Undo</button>
-        </div>
-    </div>
     <main>
-        
-        <div id="chat-box">
-            <div id="chat-container">
-                
-            </div>
-            <div id="chat-control">
-                <input type="text" id="input" placeholder="Type a message...">
-                <button id="send" onclick="sendMessageStream()">Send</button>
-            </div>
+        <div id="starter">
+            <h3> <b>Welcome, I’m a chatbot specialises in e-export and e-commerce. </b>  Feel free to ask any question I would be happy to help.</h3>
+            <section>
+                <div id="opOne" class="opening">
+                    <p>Hey! Choosing the right marketplace is crucial for e-commerce success. I want to expand my business in south america. Can you provide with list of sutablue market place to sell shoes ?</p>
+                </div>
+                <div id="opTwo" class="opening">
+                    <p>Hi there! I'm planning to export my business to china but i'm unsure where to start? Can you help me develop a robust e-export strategy with detailed market analysis and economic forecasts ?</p>
+                </div>
+            </section>
+            <section>
+                <div id="opThree" class="opening">
+                    <p>Good morning! I'm looking to optimize my export strategies, can you provide me expert guidance and best practices. What shoud i do and what are the challenges i'm gonna face ?</p>
+                </div>
+                <div id="opFour" class="opening">
+                    <p>Hello! I am a French producer of caviar and I want to sell my product to Germany. Please provide me the best marketplaces for E-Export to sell online to German B2B and B2C clients.</p>
+                </div>
+            </section>
         </div>
-        
+        <div id="windows">
+           
+        </div>
+        <div id="inputBar">
+            <input type="text" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
     </main>
-    <footer>
-        <a href="https://www.flaticon.com/fr/icones-gratuites/partir" title="partir icônes">Partir icônes créées par Uniconlabs - Flaticon</a>
-        <a href="https://www.flaticon.com/fr/icones-gratuites/engrenages" title="engrenages icônes">Engrenages icônes créées par Freepik - Flaticon</a>
-        <a href="https://www.flaticon.com/fr/icones-gratuites/parametres-de-lapplication" title="paramètres de l'application icônes">Paramètres de l'application icônes créées par Subhan Abdul Aziz - Flaticon</a>
-    </footer>
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
+    <svg id="close" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#000C5A" d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6z"/></svg>
+    <svg id="burger" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#000C5A" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z"/></svg>
 </body>
 </html>

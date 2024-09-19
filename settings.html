@@ -13,9 +13,9 @@
         <section class="parts">
             <h1>Settings</h1>
             <div>
-                <button id="deletePP">Delete Image</button>
-                <img id="PP" src="img/defaultProfilePicture.png" alt="your profile picture">
-                <button id="updatePP">Update Image</button>
+                <button id="deletePP" onclick="deletePicture()">Delete Image</button>
+                <img id="PP" src="./img/defaultProfilePicture.png" alt="your profile picture">
+                <button id="updatePP" onclick="openPopUp()">Update Image</button>
             </div>
         </section>
         <hr>
@@ -30,15 +30,15 @@
                     <input type="email" id="email">
                 </div>
             </div>
-            <button id="updateProfile">Update profile</button>
+            <button id="updateProfile" onclick="updateProfile()">Update profile</button>
             <div id="fgTwo" class="fieldsGroup">
                 <div class="fields">
                     <label for="password">Password: </label>
-                    <input type="password" id="password">
+                    <input type="password" id="password" placeholder="********">
                 </div>
                 <div id="hidden" class="fields">
-                    <label for="hidden">hidden</label>
-                    <input type="text" >
+                    <label for="gost">hidden</label>
+                    <input type="text" id="gost">
                 </div>
             </div>
         </section>
@@ -46,13 +46,19 @@
         <section class="parts">
             <p>Enter “DELETE” and clic the button to delete permanently your account.</p>
             <div>
-                <input type="text" placeholder="DELETE">
-                <button>Delete account</button>
+                <input type="text" placeholder="DELETE" id="validation">
+                <button onclick="deleteProfile()">Delete account</button>
             </div>
         </section>
-        <a id="closeBtn" href="main.html">
+        <a id="closeBtn" href="index.html">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 32 32"><path fill="black" d="M16 2C8.2 2 2 8.2 2 16s6.2 14 14 14s14-6.2 14-14S23.8 2 16 2m0 26C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12s-5.4 12-12 12"/><path fill="black" d="M21.4 23L16 17.6L10.6 23L9 21.4l5.4-5.4L9 10.6L10.6 9l5.4 5.4L21.4 9l1.6 1.6l-5.4 5.4l5.4 5.4z"/></svg>
         </a>
     </main>
+    <div id="form">
+        <label for="picture">Upload here:</label>
+        <input type="file" id="picture" accept="image/*"> 
+        <button onclick="updatePicture()">Confirme</button>
+    </div>
+    <div id="overlay"></div>
 </body>
 </html>

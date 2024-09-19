@@ -94,6 +94,8 @@ aside nav ul {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    height: 55vh;
+    overflow-y: scroll;
 }
 
 aside nav ul li {
@@ -106,6 +108,15 @@ aside nav ul li {
     border-radius: 15px;
     cursor: pointer;
     transition: ease-in-out 0.3s;
+}
+
+aside nav ul li input {
+    border: none;
+}
+
+
+aside nav ul .active input {
+    border-bottom: 4px solid var(--primary);
 }
 
 aside section {
@@ -152,6 +163,7 @@ main #starter{
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 1;
 }
 
 main #starter h3 {
@@ -182,6 +194,10 @@ main #starter section div {
     transition: ease-in-out 0.3s;
 }
 
+main #starter .opening:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
 
 main #starter section div:hover {
     transform: scale(1.1);
@@ -192,6 +208,7 @@ main #starter section div p {
     padding-left: 10px;
     padding-right: 10px;
 }
+
 
 main #opOne {
     background: linear-gradient(0.4turn, var(--primary), var(--accent));
@@ -210,7 +227,43 @@ main #opFour {
 }
 
 main #windows {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-40%, -40%);
+    width: 70%;
+    height: 80%;
+    overflow-y: scroll;
+}
 
+main #windows .message {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+main #windows .message img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+
+main #windows .message p {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+    word-wrap: break-word;
+}
+
+main #windows .user img {
+    border: 1px solid var(--primary);
+}
+
+main #windows .bot img {
+    border: 1px solid var(--accent);
 }
 
 main #inputBar {
@@ -249,6 +302,7 @@ main #inputBar button {
     margin-right: 20px;
     transition: ease-in-out 0.3s;
     cursor: pointer;
+    color: var(--text);
 }
 
 main #inputBar button:hover {
