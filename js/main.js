@@ -499,7 +499,7 @@ async function sendMessage() {
 // ========================================================================================================
 // Get all messages
 function getMessages(id) {
-    fetch(`${url}/api/message/get`, {
+    fetch(`${url}/api/message/post`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
