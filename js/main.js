@@ -3,7 +3,7 @@
 
 if (!localStorage.getItem('token-TWONTW')) {
     console.log('No token found');
-    window.location.href = 'login.html';
+    //window.location.href = 'login.html';
 } 
 const token = localStorage.getItem('token-TWONTW');
 
@@ -83,18 +83,18 @@ async function getProfilePicture(url, token) {
             response.json().then(data => {
                 alert('Session expired, please log in again');
                 console.log(data.error);
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else if (response.status === 403) { // Token invalid or not provided
             response.json().then(data => {
                 alert('An error occured, please log in again');
                 console.log(data.error);
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else {
             response.json().then(data => { // Unexpected error
                 console.error(data.error);
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         };
     });
@@ -126,17 +126,17 @@ function getChats(exeption = false) {
         } else if (response.status === 401) { // Token expired
             response.json().then(data => {
                 alert('Session expired, please log in again');
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else if (response.status === 403) { // Token invalid or not provided
             response.json().then(data => {
                 alert('An error occured, please log in again');
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else {
             response.json().then(data => { // Unexpected error
                 console.error(data.error);
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         };
     });
@@ -243,17 +243,17 @@ function updateChat(id) {
         } else if (response.status === 401) { // Token expired
             response.json().then(data => {
                 alert('Session expired, please log in again');
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else if (response.status === 403) { // Token invalid or not provided
             response.json().then(data => {
                 alert('An error occured, please log in again');
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else {
             response.json().then(data => { // Unexpected error
                 console.error(data.error);
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         };
     });
@@ -291,17 +291,17 @@ async function newChat(){
         } else if (response.status === 401) { // Token expired
             response.json().then(data => {
                 alert('Session expired, please log in again');
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else if (response.status === 403) { // Token invalid or not provided
             response.json().then(data => {
                 alert('An error occured, please log in again');
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else {
             response.json().then(data => { // Unexpected error
                 console.error(data.error);
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         };
     });
@@ -328,17 +328,17 @@ function deleteChat(id) {
         } else if (response.status === 401) { // Token expired
             response.json().then(data => {
                 alert('Session expired, please log in again');
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else if (response.status === 403) { // Token invalid or not provided
             response.json().then(data => {
                 alert('An error occured, please log in again');
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else {
             response.json().then(data => { // Unexpected error
                 console.error(data.error);
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         };
     });
@@ -479,17 +479,17 @@ async function sendMessage() {
             } else if (response.status === 401) { // Token expired
                 response.json().then(data => {
                     alert('Session expired, please log in again');
-                    window.location.href = 'login.html';
+                    //window.location.href = 'login.html';
                 });
             } else if (response.status === 403) { // Token invalid or not provided
                 response.json().then(data => {
                     alert('An error occured, please log in again');
-                    window.location.href = 'login.html';
+                    //window.location.href = 'login.html';
                 });
             } else {
                 response.json().then(data => { // Unexpected error
                     console.error(data.error);
-                    window.location.href = 'login.html';
+                    //window.location.href = 'login.html';
                 });
             };
 
@@ -499,7 +499,7 @@ async function sendMessage() {
 // ========================================================================================================
 // Get all messages
 function getMessages(id) {
-    fetch(`${url}/api/message/get`, {
+    fetch(`${url}/api/message/post`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -523,17 +523,17 @@ function getMessages(id) {
         } else if (response.status === 401) { // Token expired
             response.json().then(data => {
                 alert('Session expired, please log in again');
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else if (response.status === 403) { // Token invalid or not provided
             response.json().then(data => {
                 alert('An error occured, please log in again');
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         } else {
             response.json().then(data => { // Unexpected error
                 console.error(data.error);
-                window.location.href = 'login.html';
+                //window.location.href = 'login.html';
             });
         };
     });
